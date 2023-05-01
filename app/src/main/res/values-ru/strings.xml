@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ТПУ</string>
+
+    <string name="title_authorization">Авторизация</string>
+
+    <string name="tpu">ТОМСКИЙ ПОЛИТЕХ</string>
+    <string name="logo_tomsk">ТОМСКИЙ</string>
+    <string name="logo_polytech">ПОЛИТЕХ</string>
+
+    <string name="button_sign_in">Войти</string>
+    <string name="checkbox_remember_me">Запомнить меня?</string>
+    <string name="button_forgot_password">Забыл пароль?</string>
+
+</resources>

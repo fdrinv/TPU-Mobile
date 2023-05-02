@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.Key
@@ -47,7 +49,9 @@ import com.fedorinov.tpumobile.ui.common.CheckBoxWithText
 import com.fedorinov.tpumobile.ui.start.LoginState
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.*
 import com.fedorinov.tpumobile.ui.start.components.AuthResultWindow
+import com.fedorinov.tpumobile.ui.start.components.LoginTextField
 import com.fedorinov.tpumobile.ui.start.components.LogoCompanyBrand
+import com.fedorinov.tpumobile.ui.start.components.PasswordTextField
 import com.fedorinov.tpumobile.ui.theme.BUTTON_SHAPE
 import com.fedorinov.tpumobile.ui.theme.ICON_MEDIUM_SIZE
 import com.fedorinov.tpumobile.ui.theme.PADDING_BIG
@@ -178,6 +182,7 @@ private fun AuthorizationContent(
                 start = PADDING_BIG,
                 end = PADDING_BIG
             )
+            .verticalScroll(rememberScrollState())
     ) {
         // - Компонент бренда и логотипа бренда
         LogoCompanyBrand()
@@ -200,6 +205,7 @@ private fun AuthorizationContent(
         PasswordTextField(
             password = password,
             isHidePassword = isHidePassword,
+            placeholderText = stringResource(R.string.text_field_password),
             onPasswordChanged = onPasswordChanged,
             onHideChanged = onHideChanged,
             modifier = Modifier
@@ -279,82 +285,6 @@ private fun AuthorizationContent(
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun LoginTextField(
-    modifier: Modifier = Modifier,
-    login: String,
-    onLoginChanged: (String) -> Unit
-) {
-    OutlinedTextField(
-        modifier = modifier,
-        value = login,
-        onValueChange = onLoginChanged,
-        singleLine = true,
-        placeholder = {
-            Text(stringResource(R.string.text_field_login))
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Outlined.Person,
-                contentDescription = null
-            )
-        },
-        trailingIcon = {
-            if (login.isNotEmpty()) {
-                IconButton(onClick = { onLoginChanged("") }) {
-                    Icon(
-                        imageVector = Icons.Outlined.Cancel,
-                        contentDescription = null
-                    )
-                }
-            }
-        }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun PasswordTextField(
-    modifier: Modifier = Modifier,
-    password: String,
-    isHidePassword: Boolean,
-    onPasswordChanged: (String) -> Unit,
-    onHideChanged: () -> Unit
-) {
-    OutlinedTextField(
-        modifier = modifier,
-        value = password,
-        onValueChange = onPasswordChanged,
-        singleLine = true,
-        visualTransformation =
-            if (isHidePassword) PasswordVisualTransformation()
-            else VisualTransformation.None,
-        placeholder = {
-            Text(stringResource(R.string.text_field_password))
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Outlined.Key,
-                contentDescription = null
-            )
-        },
-        trailingIcon = {
-            IconButton(onClick = onHideChanged) {
-                Icon(
-                    imageVector =
-                        if (isHidePassword) Icons.Outlined.VisibilityOff
-                        else Icons.Outlined.Visibility,
-                    contentDescription = null,
-                    tint =
-                        if (isHidePassword) Color.Unspecified
-                        else MaterialTheme.colorScheme.primary,
-                )
-            }
-        }
-    )
 }
 
 @Preview(device = "id:pixel_4", locale = "ru")

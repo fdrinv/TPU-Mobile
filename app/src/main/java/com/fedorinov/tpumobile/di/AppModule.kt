@@ -1,5 +1,6 @@
 package com.fedorinov.tpumobile.di
 
+import com.fedorinov.tpumobile.data.rest.RestApiTpu
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -13,4 +14,7 @@ val appModule = module {
 
     // ViewModels
     viewModel { AuthorizationViewModel() }
+
+    // Rest-Api
+    single { RestApiTpu() }
 }

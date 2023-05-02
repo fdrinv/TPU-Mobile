@@ -3,6 +3,7 @@
     <string name="app_name">TPU</string>
 
     <string name="title_authorization">Authorization</string>
+    <string name="title_registration">Registration</string>
 
     <string name="tpu">TOMSK POLYTECH</string>
     <string name="logo_tomsk">TOMSK</string>
@@ -11,11 +12,18 @@
 
     <string name="button_sign_in">Sign In</string>
     <string name="button_sign_up">Create an account</string>
-    <string name="text_field_login">Login</string>
-    <string name="text_field_password">Password</string>
     <string name="checkbox_remember_me">Remember me?</string>
     <string name="button_forgot_password">Forgot password?</string>
     <string name="text_or">OR</string>
 
+    <string name="text_field_login">Login</string>
+    <string name="text_field_password">Password</string>
+    <string name="text_field_repeat_password">Repeat password</string>
+    <string name="text_field_email">Email address</string>
+    <string name="text_field_first_name">First name</string>
+    <string name="text_field_last_name">Last name</string>
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
 </resources>

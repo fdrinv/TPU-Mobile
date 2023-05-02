@@ -1,23 +1,16 @@
 package com.fedorinov.tpumobile.data.rest
 
-import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class RestApiTpu {
-
-    private val gson = GsonBuilder()
-        .setLenient()
-        .create()
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("")
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 

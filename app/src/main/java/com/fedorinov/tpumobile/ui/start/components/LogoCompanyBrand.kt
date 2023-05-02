@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +21,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fedorinov.tpumobile.R
+import com.fedorinov.tpumobile.ui.theme.ICON_BIG_SIZE
 import com.fedorinov.tpumobile.ui.theme.PADDING_BIG
 import com.fedorinov.tpumobile.ui.theme.TPUMobileTheme
 
@@ -29,9 +32,10 @@ fun LogoCompanyBrand(modifier: Modifier = Modifier) {
         modifier = modifier
     ) {
         Icon(
-            painter = painterResource(R.drawable.tpu_logo),
+            imageVector = ImageVector.vectorResource(R.drawable.tpu_logo),
             contentDescription = stringResource(R.string.tpu),
-            modifier = Modifier.size(96.dp)
+            modifier = Modifier.size(ICON_BIG_SIZE),
+            tint = Color.Unspecified
         )
         Spacer(modifier = Modifier.height(PADDING_BIG))
         Text(

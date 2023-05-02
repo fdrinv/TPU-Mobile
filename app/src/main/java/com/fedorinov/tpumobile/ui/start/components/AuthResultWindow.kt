@@ -16,6 +16,7 @@ import com.fedorinov.tpumobile.ui.start.LoginState.Error
 import com.fedorinov.tpumobile.ui.start.LoginState.Loading
 import com.fedorinov.tpumobile.ui.start.LoginState.Success
 import com.fedorinov.tpumobile.ui.theme.PADDING_BIG
+import com.fedorinov.tpumobile.ui.theme.PADDING_MEDIUM
 import com.fedorinov.tpumobile.ui.theme.SURFACE_SHAPE
 import com.fedorinov.tpumobile.ui.theme.TPUMobileTheme
 
@@ -54,7 +55,7 @@ fun AuthResultWindow(
         is Loading -> {
             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         }
-        else -> Box { }
+        else -> Box(modifier = Modifier.padding(PADDING_MEDIUM)) { }
     }
 }
 

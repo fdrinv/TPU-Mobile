@@ -9,7 +9,11 @@
     <string name="logo_polytech">ПОЛИТЕХ</string>
 
     <string name="button_sign_in">Войти</string>
+    <string name="button_sign_up">Создать аккаунт</string>
+    <string name="text_field_login">Логин</string>
+    <string name="text_field_password">Логин</string>
     <string name="checkbox_remember_me">Запомнить меня?</string>
     <string name="button_forgot_password">Забыл пароль?</string>
+    <string name="text_or">ИЛИ</string>
 
 </resources>

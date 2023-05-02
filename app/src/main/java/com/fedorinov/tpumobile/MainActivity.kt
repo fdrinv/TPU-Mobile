@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
                                 darkIcons = true
                             )
                         }
-                        AuthorizationScreen()
+                        AuthorizationScreen(signUp  = {})
                     }
                 }
             }

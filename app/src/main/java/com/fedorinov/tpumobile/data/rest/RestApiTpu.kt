@@ -3,13 +3,15 @@ package com.fedorinov.tpumobile.data.rest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class RestApiTpu {
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl(REST_INTERNATIONALS_TPU_API_URL)
+            .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
     }
@@ -19,10 +21,10 @@ class RestApiTpu {
         interceptor.level = HttpLoggingInterceptor.Level.HEADERS
 
         OkHttpClient.Builder()
-            .connectTimeout(120, TimeUnit.SECONDS)
-            .readTimeout(120, TimeUnit.SECONDS)
-            .writeTimeout(120, TimeUnit.SECONDS)
-            .callTimeout(120, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .callTimeout(30, TimeUnit.SECONDS)
             .build()
     }
 

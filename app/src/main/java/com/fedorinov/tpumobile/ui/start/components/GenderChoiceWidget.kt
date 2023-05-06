@@ -50,5 +50,5 @@ fun GenderChoiceWidget(
 @Preview
 @Composable
 private fun GenderChoiceWidgetPreview() {
-    GenderChoiceWidget(Gender.MALE, {})
+    GenderChoiceWidget(Modifier, Gender.MALE) {}
 }

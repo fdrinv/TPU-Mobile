@@ -9,12 +9,14 @@
     <string name="logo_tomsk">TOMSK</string>
     <string name="logo_polytech">POLYTECH</string>
 
-
     <string name="button_sign_in">Sign In</string>
     <string name="button_sign_up">Create an account</string>
     <string name="checkbox_remember_me">Remember me?</string>
     <string name="button_forgot_password">Forgot password?</string>
     <string name="text_or">OR</string>
+
+    <string name="text_success_auth">You have successfully logged in to the system, please wait to be redirected to the main page</string>
+    <string name="text_unknown_auth_error">Unknown error</string>
 
     <string name="text_field_login">Login</string>
     <string name="text_field_password">Password</string>
@@ -25,5 +27,9 @@
 
     <string name="male">Male</string>
     <string name="female">Female</string>
+
+    <string name="exception_timeout">Timeout exceeded</string>
+    <string name="exception_internet_connection">No internet connection</string>
+
 
 </resources>

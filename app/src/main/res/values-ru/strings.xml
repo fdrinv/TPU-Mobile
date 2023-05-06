@@ -15,6 +15,9 @@
     <string name="button_forgot_password">Забыл пароль?</string>
     <string name="text_or">ИЛИ</string>
 
+    <string name="text_success_auth">Вы успешно авторизировались в системе, ожидайте перенаправления на сглавную страницу</string>
+    <string name="text_unknown_auth_error">Непредвиденная ошибка</string>
+
     <string name="text_field_login">Логин</string>
     <string name="text_field_password">Пароль</string>
     <string name="text_field_repeat_password">Повторите пароль</string>
@@ -24,5 +27,8 @@
 
     <string name="male">Мужской</string>
     <string name="female">Женский</string>
+
+    <string name="exception_timeout">Превышено время ожидания</string>
+    <string name="exception_internet_connection">Нет соединения с интернетом</string>
 
 </resources>

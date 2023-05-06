@@ -1,7 +1,5 @@
 package com.fedorinov.tpumobile.ui.start.auth
 
-import com.fedorinov.tpumobile.ui.start.LoginState
-
 data class AuthorizationUiState(
     val login: String = "",
     val password: String = "",

@@ -1,13 +1,10 @@
 package com.fedorinov.tpumobile.ui.start.auth
 
-import android.content.res.Resources
-import androidx.compose.ui.res.stringResource
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fedorinov.tpumobile.R
 import com.fedorinov.tpumobile.data.repositories.AuthRepository
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.*
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -30,7 +27,7 @@ class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewM
                 is RememberChanged -> changeRemember(prevState, currentEvent.isRemember)
                 is PasswordVisibilityChanged -> changePasswordVisibility(prevState)
                 is SignIn -> {
-                    signIn(prevState)
+                    signIn()
                     uiState.value
                 }
             }
@@ -73,13 +70,12 @@ class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewM
 
     /**
      * Авторизация в системе.
-     * @param [prevState] - предыдущее состояние.
      */
-    private fun signIn(prevState: AuthorizationUiState) = viewModelScope.launch {
+    private fun signIn() = viewModelScope.launch {
         // 1. Начинаем крутить баранку, о том, что процесс авторизации стартовал
         _uiState.update { prevState ->
             prevState.copy(
-                loginState = LoginState.Loading
+                authState = AuthState.Loading
             )
         }
         // 2. Отправляем запрос на авторизацию и получаем результат
@@ -89,27 +85,21 @@ class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewM
             rememberMe = uiState.value.isRemember
         )
         // 3.1. Если авторизация прошла успешно
-        if (response?.message.isNullOrEmpty()) {
+        if (response.message.isEmpty()) {
             _uiState.update { prevState ->
                 prevState.copy(
-                    loginState = LoginState.Success(text = Resources.getSystem().getString(R.string.text_success_auth))
+                    authState = AuthState.Success(response)
                 )
             }
         }
         // 3.2 В противном случае вывести информацию по неудачной попытке авторизации.
         else {
             _uiState.update { prevState ->
+                Log.i(TAG, "signIn: response = $response")
                 prevState.copy(
-                    loginState = LoginState.Error(response)
+                    authState = AuthState.Error(response)
                 )
             }
-        }
-        delay(TIME_VIEW_RESULT_MESSAGE)
-        // 4. По результату запроса - завершаем крутить баранку
-        _uiState.update { prevState ->
-            prevState.copy(
-                loginState = LoginState.Unknown
-            )
         }
     }
 
@@ -117,5 +107,9 @@ class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewM
         return prevState.copy(
             isRemember = isRemember
         )
+    }
+
+    companion object {
+        private val TAG = AuthorizationViewModel::class.simpleName
     }
 }

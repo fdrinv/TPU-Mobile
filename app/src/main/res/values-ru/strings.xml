@@ -17,6 +17,9 @@
 
     <string name="text_success_auth">Вы успешно авторизировались в системе, ожидайте перенаправления на сглавную страницу</string>
     <string name="text_unknown_auth_error">Непредвиденная ошибка</string>
+    <string name="text_error_desc">Описание ошибки</string>
+    <string name="text_error_type">Тип ошибки</string>
+    <string name="text_time">Время</string>
 
     <string name="text_field_login">Логин</string>
     <string name="text_field_password">Пароль</string>
@@ -30,5 +33,8 @@
 
     <string name="exception_timeout">Превышено время ожидания</string>
     <string name="exception_internet_connection">Нет соединения с интернетом</string>
+    <string name="exception_empty_response">Сервер вернул пустой ответ</string>
+    <string name="exception_other_response">Сервер вернул ответ с кодом %1$d</string>
+    <string name="exception_no_internet_connection">Отсутствует подключение к интернету</string>
 
 </resources>

@@ -17,6 +17,9 @@
 
     <string name="text_success_auth">You have successfully logged in to the system, please wait to be redirected to the main page</string>
     <string name="text_unknown_auth_error">Unknown error</string>
+    <string name="text_error_desc">Error description</string>
+    <string name="text_error_type">Error type</string>
+    <string name="text_time">Time</string>
 
     <string name="text_field_login">Login</string>
     <string name="text_field_password">Password</string>
@@ -30,5 +33,8 @@
 
     <string name="exception_timeout">Timeout exceeded</string>
     <string name="exception_internet_connection">No internet connection</string>
+    <string name="exception_empty_response">Server returned an empty response</string>
+    <string name="exception_other_response">Server returned a response with the code %1$d</string>
+    <string name="exception_no_internet_connection">No internet connection</string>
 
 </resources>

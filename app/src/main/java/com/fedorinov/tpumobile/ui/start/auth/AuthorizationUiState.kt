@@ -5,5 +5,5 @@ data class AuthorizationUiState(
     val password: String = "",
     val isRemember: Boolean = false,
     val isHidePassword: Boolean = true,
-    val loginState: LoginState = LoginState.Unknown
+    val authState: AuthState = AuthState.Unknown
 )

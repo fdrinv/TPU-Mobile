@@ -58,7 +58,7 @@ fun AuthorizationScreen(signUp: () -> Unit) {
 
     AuthorizationScreenStateless(
         // - Состояние окна с результатом авторизации
-        loginState = uiState.loginState,
+        loginState = uiState.authState,
         // - Поле логина
         login = uiState.login,
         onLoginChanged = { newLogin -> viewModel.receiveUiEvent(LoginChanged(newLogin)) },
@@ -83,7 +83,7 @@ fun AuthorizationScreen(signUp: () -> Unit) {
 @Composable
 private fun AuthorizationScreenStateless(
     // - Состояние окна с результатом авторизации
-    loginState: LoginState = LoginState.Loading,
+    loginState: AuthState = AuthState.Loading,
     // - Поле логина
     login: String = "fedorinovea",
     onLoginChanged: (String) -> Unit = {},
@@ -100,7 +100,7 @@ private fun AuthorizationScreenStateless(
     // - Войти
     signIn: () -> Unit = {},
     // - Зарегистрироваться
-    signUp: () -> Unit = {},
+    signUp: () -> Unit = {}
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -109,7 +109,7 @@ private fun AuthorizationScreenStateless(
             AuthorizationContent(
                 paddingValues = paddingValues,
                 // - Состояние окна с результатом авторизации
-                loginState = loginState,
+                authState = loginState,
                 // - Поле логина
                 login = login,
                 onLoginChanged = onLoginChanged,
@@ -142,7 +142,7 @@ private fun AuthorizationTopBar() {
 private fun AuthorizationContent(
     paddingValues: PaddingValues,
     // - Состояние окна с результатом авторизации
-    loginState: LoginState,
+    authState: AuthState,
     // - Поле логина
     login: String,
     onLoginChanged: (String) -> Unit,
@@ -177,7 +177,7 @@ private fun AuthorizationContent(
         LogoCompanyBrand()
         // - Окно с информацией (результатом) авторизации
         AuthResultWindow(
-            loginState = loginState,
+            authState = authState,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = PADDING_BIG)
@@ -188,7 +188,7 @@ private fun AuthorizationContent(
             onLoginChanged = onLoginChanged,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = PADDING_BIG)
+                .padding(top = PADDING_MEDIUM, bottom = PADDING_BIG)
         )
         // - Пароль
         PasswordTextField(
@@ -232,7 +232,7 @@ private fun AuthorizationContent(
         // - Зарегистрироваться
         OutlinedButton(
             onClick = signUp,
-            enabled = loginState != LoginState.Loading,
+            enabled = authState != AuthState.Loading,
             shape = RoundedCornerShape(BUTTON_SHAPE),
             modifier = Modifier
                 .fillMaxWidth()

@@ -2,9 +2,12 @@ package com.fedorinov.tpumobile.data.rest
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
 
 class RestApiTpu {
 
@@ -18,9 +21,10 @@ class RestApiTpu {
 
     private val client: OkHttpClient by lazy {
         val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.HEADERS
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
 
         OkHttpClient.Builder()
+            .addInterceptor(interceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
@@ -31,4 +35,5 @@ class RestApiTpu {
     val api: RestApiInterface by lazy {
         retrofit.create(RestApiInterface::class.java)
     }
+
 }

@@ -5,7 +5,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-const val DATE_PATTERN = "yyyy-MM-dd HH-mm-ss"
+const val DATE_PATTERN = "HH:mm:ss dd.MM.yyyy"
 
 fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
     val formatter = SimpleDateFormat(format, locale)

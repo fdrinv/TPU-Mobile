@@ -64,9 +64,7 @@ fun AuthorizationScreen(signUp: () -> Unit) {
         onLoginChanged = { newLogin -> viewModel.receiveUiEvent(LoginChanged(newLogin)) },
         // Поле пароля
         password = uiState.password,
-        isHidePassword = uiState.isHidePassword,
         onPasswordChanged = { newPassword -> viewModel.receiveUiEvent(PasswordChanged(newPassword)) },
-        onHideChanged = { viewModel.receiveUiEvent(PasswordVisibilityChanged) },
         // - Запомнить пользователя
         isRemember = uiState.isRemember,
         onRememberClicked = { isRemember -> viewModel.receiveUiEvent(RememberChanged(isRemember)) },
@@ -89,9 +87,7 @@ private fun AuthorizationScreenStateless(
     onLoginChanged: (String) -> Unit = {},
     // - Поле пароля
     password: String = "qwerty",
-    isHidePassword: Boolean = false,
     onPasswordChanged: (String) -> Unit = {},
-    onHideChanged: () -> Unit = {},
     // - Запомнить пользователя
     isRemember: Boolean = true,
     onRememberClicked: (Boolean) -> Unit = {},
@@ -115,9 +111,7 @@ private fun AuthorizationScreenStateless(
                 onLoginChanged = onLoginChanged,
                 // - Поле пароля
                 password = password,
-                isHidePassword = isHidePassword,
                 onPasswordChanged = onPasswordChanged,
-                onHideChanged = onHideChanged,
                 // - Запомнить пользователя
                 isRemember = isRemember,
                 onRememberClicked = onRememberClicked,
@@ -148,9 +142,7 @@ private fun AuthorizationContent(
     onLoginChanged: (String) -> Unit,
     // Поле пароля
     password: String,
-    isHidePassword: Boolean,
     onPasswordChanged: (String) -> Unit,
-    onHideChanged: () -> Unit,
     // - Запомнить пользователя
     isRemember: Boolean,
     onRememberClicked: (Boolean) -> Unit,
@@ -193,10 +185,8 @@ private fun AuthorizationContent(
         // - Пароль
         PasswordTextField(
             password = password,
-            isHidePassword = isHidePassword,
             placeholderText = stringResource(R.string.text_field_password),
             onPasswordChanged = onPasswordChanged,
-            onHideChanged = onHideChanged,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = PADDING_BIG)

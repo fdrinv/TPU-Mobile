@@ -36,4 +36,17 @@ class RestApiTpu {
         retrofit.create(RestApiInterface::class.java)
     }
 
+    /**
+     * Первичная проверка ответа от сервера.
+     */
+    fun <T> checkResponse(response: Response<T>): T {
+        if (response.code() == 400) throw ApiExceptions.BadCredentials
+
+        if (response.code() != 200) throw ApiExceptions.OtherException(response.code())
+
+        if (response.body() == null) throw ApiExceptions.OtherException(response.code())
+
+        return response.body()!!
+    }
+
 }

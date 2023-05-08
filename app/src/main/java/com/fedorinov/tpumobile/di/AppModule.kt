@@ -1,8 +1,10 @@
 package com.fedorinov.tpumobile.di
 
 import android.net.ConnectivityManager
+import com.fedorinov.tpumobile.data.database.RoomDb
 import com.fedorinov.tpumobile.data.repositories.AuthRepository
 import com.fedorinov.tpumobile.data.rest.RestApiTpu
+import com.fedorinov.tpumobile.logic.sync.Synchronize
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -15,8 +17,14 @@ val appModule = module {
     // App Coroutine Scope
     single { CoroutineScope(SupervisorJob()) }
 
-    // ViewModels
-    viewModel { AuthorizationViewModel(get()) }
+    // Database
+    single { RoomDb.databaseBuilder(androidContext(), get()) }
+
+    // Sync
+    single { Synchronize(get(), get()) }
+
+    // Dao
+    single { get<RoomDb>().groupDao() }
 
     // Rest-Api
     single { RestApiTpu() }
@@ -24,5 +32,7 @@ val appModule = module {
     // Repositories
     single { AuthRepository(get(), androidContext().getSystemService(ConnectivityManager::class.java) as ConnectivityManager) }
 
+    // ViewModels
+    viewModel { AuthorizationViewModel(get()) }
 
 }

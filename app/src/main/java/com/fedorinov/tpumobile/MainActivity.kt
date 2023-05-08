@@ -2,7 +2,6 @@ package com.fedorinov.tpumobile
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color

@@ -4,15 +4,24 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fedorinov.tpumobile.data.repositories.AuthRepository
+import com.fedorinov.tpumobile.logic.sync.Synchronize
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-private const val TIME_VIEW_RESULT_MESSAGE = 3000L
+import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.get
+import org.koin.java.KoinJavaComponent.inject
 
 class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewModel() {
+
+    init {
+        runBlocking {
+            val synchronize: Synchronize by inject(Synchronize::class.java)
+            synchronize.doSync()
+        }
+    }
 
     // - Состояние экрана
     private val _uiState: MutableStateFlow<AuthorizationUiState> = MutableStateFlow(AuthorizationUiState())
@@ -25,7 +34,6 @@ class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewM
                 is LoginChanged -> changeLogin(prevState, currentEvent.newLogin)
                 is PasswordChanged -> changePassword(prevState, currentEvent.newPassword)
                 is RememberChanged -> changeRemember(prevState, currentEvent.isRemember)
-                is PasswordVisibilityChanged -> changePasswordVisibility(prevState)
                 is SignIn -> {
                     signIn()
                     uiState.value
@@ -55,16 +63,6 @@ class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewM
         // TODO: Добавить валидацию данных
         return prevState.copy(
             password = newPassword
-        )
-    }
-
-    /**
-     * Меняет видимость символов в поле пароля.
-     * @param [prevState] - предыдущее состояние.
-     */
-    private fun changePasswordVisibility(prevState: AuthorizationUiState): AuthorizationUiState {
-        return prevState.copy(
-            isHidePassword = !prevState.isHidePassword
         )
     }
 

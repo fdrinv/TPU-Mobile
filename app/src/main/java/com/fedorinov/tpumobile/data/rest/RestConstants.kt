@@ -5,3 +5,8 @@ const val REST_INTERNATIONALS_TPU_API_URL = "https://internationals.tpu.ru:8080/
 
 // - Авторизация в системе через почту и пароль
 const val REST_AUTHORIZATION_BY_LOCAL = "auth/local/login"
+// - Регистрация в системе
+const val REST_REGISTRATION_BY_LOCAL = "auth/local/registration"
+
+// - Получение учебных групп
+const val REST_GET_GROUPS = "studyGroup"

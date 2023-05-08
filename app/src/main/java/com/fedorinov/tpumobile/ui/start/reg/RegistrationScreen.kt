@@ -3,6 +3,7 @@ package com.fedorinov.tpumobile.ui.start.reg
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,16 +21,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.fedorinov.tpumobile.R
-import com.fedorinov.tpumobile.ui.start.components.LoginTextField
+import com.fedorinov.tpumobile.ui.common.RadioButtonWithText
 import com.fedorinov.tpumobile.ui.start.components.LogoCompanyBrand
 import com.fedorinov.tpumobile.ui.start.components.PasswordTextField
 import com.fedorinov.tpumobile.ui.theme.PADDING_BIG
@@ -46,14 +43,12 @@ fun RegistrationScreen(onBackClicked: () -> Unit) {
 @Composable
 private fun RegistrationScreenStateless(
     // - Поля авторизации
-    login: String = "fedorinovea",
-    onLoginChanged: (String) -> Unit = {},
+    email: String = "fedorinovea@indorsoft.ru",
+    onEmailChanged: (String) -> Unit = {},
     password: String = "qwerty",
     onPasswordChanged: (String) -> Unit = {},
     repeatPassword: String = "qwerty",
     onRepeatPasswordChanged: (String) -> Unit = {},
-    email: String = "fedorinovea@indorsoft.ru",
-    onEmailChanged: (String) -> Unit = {},
     firstName: String = "Евгений",
     onFirstNameChanged: (String) -> Unit = {},
     lastName: String = "Федоринов",
@@ -82,14 +77,12 @@ private fun RegistrationScreenStateless(
             RegistrationContent(
                 paddingValues = paddingValues,
                 // - Поля авторизации
-                login = login,
-                onLoginChanged = onLoginChanged,
+                email = email,
+                onEmailChanged = onEmailChanged,
                 password = password,
                 onPasswordChanged = onPasswordChanged,
                 repeatPassword = repeatPassword,
                 onRepeatPasswordChanged = onRepeatPasswordChanged,
-                email = email,
-                onEmailChanged = onEmailChanged,
                 firstName = firstName,
                 onFirstNameChanged = onFirstNameChanged,
                 lastName = lastName,
@@ -123,14 +116,12 @@ private fun RegistrationTopBar(onBackClicked: () -> Unit) {
 private fun RegistrationContent(
     paddingValues: PaddingValues,
     // - Поля авторизации
-    login: String,
-    onLoginChanged: (String) -> Unit,
+    email: String,
+    onEmailChanged: (String) -> Unit,
     password: String,
     onPasswordChanged: (String) -> Unit,
     repeatPassword: String,
     onRepeatPasswordChanged: (String) -> Unit,
-    email: String,
-    onEmailChanged: (String) -> Unit,
     firstName: String,
     onFirstNameChanged: (String) -> Unit,
     lastName: String,
@@ -164,42 +155,28 @@ private fun RegistrationContent(
     ) {
         // - Компонент бренда и логотипа бренда
         LogoCompanyBrand(modifier = Modifier.padding(bottom = PADDING_BIG))
-        // - Логин
-        LoginTextField(
-            login = login,
-            onLoginChanged = onLoginChanged,
+        // - Электронная почта
+        EmailTextField(
+            email = email,
+            onEmailChanged = onEmailChanged,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = PADDING_BIG)
         )
         // - Пароль
-        var isHidePassword by rememberSaveable { mutableStateOf(true) }
         PasswordTextField(
             password = password,
-            isHidePassword = isHidePassword,
             placeholderText = stringResource(R.string.text_field_password),
             onPasswordChanged = onPasswordChanged,
-            onHideChanged = { isHidePassword = !isHidePassword },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = PADDING_BIG)
         )
         // - Повторный пароль
-        var isHideRepeatPassword by rememberSaveable { mutableStateOf(true) }
         PasswordTextField(
             password = repeatPassword,
             placeholderText = stringResource(R.string.text_field_repeat_password),
-            isHidePassword = isHideRepeatPassword,
             onPasswordChanged = onRepeatPasswordChanged,
-            onHideChanged = { isHideRepeatPassword = !isHideRepeatPassword },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = PADDING_BIG)
-        )
-        // - Электронная почта
-        EmailTextField(
-            email = email,
-            onEmailChanged = onEmailChanged,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = PADDING_BIG)
@@ -216,6 +193,14 @@ private fun RegistrationContent(
         LastNameTextField(
             lastName = lastName,
             onLastNameChanged = onLastNameChanged,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = PADDING_BIG)
+        )
+        // - Гендер пользователя
+        GenderRadioButtons(
+            gender = gender,
+            onGenderChanged = onGenderChanged,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = PADDING_BIG)
@@ -323,6 +308,32 @@ private fun LastNameTextField(
             }
         }
     )
+}
+
+@Composable
+private fun GenderRadioButtons(
+    modifier: Modifier = Modifier,
+    gender: Gender,
+    onGenderChanged: (Gender) -> Unit
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // - Мужской
+        RadioButtonWithText(
+            text = stringResource(R.string.male),
+            isSelected = gender == Gender.MALE,
+            onSelectedChange = { onGenderChanged(Gender.MALE) }
+        )
+        // - Женский
+        RadioButtonWithText(
+            text = stringResource(R.string.female),
+            isSelected = gender == Gender.FEMALE,
+            onSelectedChange = { onGenderChanged(Gender.FEMALE) }
+        )
+    }
 }
 
 @Preview

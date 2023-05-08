@@ -11,6 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -23,11 +27,10 @@ import com.fedorinov.tpumobile.R
 fun PasswordTextField(
     modifier: Modifier = Modifier,
     password: String,
-    isHidePassword: Boolean,
     placeholderText: String,
-    onPasswordChanged: (String) -> Unit,
-    onHideChanged: () -> Unit
+    onPasswordChanged: (String) -> Unit
 ) {
+    var isHidePassword by rememberSaveable { mutableStateOf(true) }
     OutlinedTextField(
         modifier = modifier,
         value = password,
@@ -46,7 +49,7 @@ fun PasswordTextField(
             )
         },
         trailingIcon = {
-            IconButton(onClick = onHideChanged) {
+            IconButton(onClick = { isHidePassword = !isHidePassword }) {
                 Icon(
                     imageVector =
                     if (isHidePassword) Icons.Outlined.VisibilityOff

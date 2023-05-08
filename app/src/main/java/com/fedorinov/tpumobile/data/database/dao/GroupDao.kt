@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.fedorinov.tpumobile.data.database.entity.GroupEntity
 import com.fedorinov.tpumobile.data.database.entity.SynchronizeEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GroupDao {
@@ -17,6 +18,9 @@ interface GroupDao {
 
     @Query("SELECT id, external_id FROM 'group'")
     suspend fun selectSyncOnce(): List<SynchronizeEntity>
+
+    @Query("SELECT * FROM 'group' ORDER BY name")
+    fun selectAllAsFlow(): Flow<List<GroupEntity>>
 
     @Update
     suspend fun update(group: GroupEntity)

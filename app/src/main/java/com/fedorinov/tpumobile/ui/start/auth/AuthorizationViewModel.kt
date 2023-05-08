@@ -16,13 +16,6 @@ import org.koin.java.KoinJavaComponent.inject
 
 class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    init {
-        runBlocking {
-            val synchronize: Synchronize by inject(Synchronize::class.java)
-            synchronize.doSync()
-        }
-    }
-
     // - Состояние экрана
     private val _uiState: MutableStateFlow<AuthorizationUiState> = MutableStateFlow(AuthorizationUiState())
     val uiState: StateFlow<AuthorizationUiState> = _uiState

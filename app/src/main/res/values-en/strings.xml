@@ -27,9 +27,19 @@
     <string name="text_field_email">Email address</string>
     <string name="text_field_first_name">First name</string>
     <string name="text_field_last_name">Last name</string>
+    <string name="text_field_group">Group</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>
+
+    <string name="text_field_choose_group">Choose a group</string>
+
+    <string name="text_button_cancel">Cancel</string>
+
+    <string name="dialog_list_group">You can select your group from a list generated based on the information you entered</string>
+
+    <string name="text_list_empty">List is empty</string>
+
 
     <string name="exception_timeout">Timeout exceeded</string>
     <string name="exception_internet_connection">No internet connection</string>

@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationScreen
+import com.fedorinov.tpumobile.ui.start.reg.RegistrationScreen
 import com.fedorinov.tpumobile.ui.theme.TPUMobileTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
                                 darkIcons = true
                             )
                         }
-                        AuthorizationScreen(signUp  = {})
+                        RegistrationScreen(onBackClicked  = {})
                     }
                 }
             }

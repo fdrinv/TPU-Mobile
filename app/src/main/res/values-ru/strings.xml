@@ -27,9 +27,18 @@
     <string name="text_field_email">Электронный адрес</string>
     <string name="text_field_first_name">Имя</string>
     <string name="text_field_last_name">Фамилия</string>
+    <string name="text_field_group">Группа</string>
 
     <string name="male">Мужской</string>
     <string name="female">Женский</string>
+
+    <string name="text_field_choose_group">Выберите группу</string>
+
+    <string name="text_button_cancel">Отменить</string>
+
+    <string name="dialog_list_group">Вы можете выбрать группу из сформированного на основе введенных данных списка</string>
+    <string name="text_list_empty">Список пуст</string>
+
 
     <string name="exception_timeout">Превышено время ожидания</string>
     <string name="exception_internet_connection">Нет соединения с интернетом</string>

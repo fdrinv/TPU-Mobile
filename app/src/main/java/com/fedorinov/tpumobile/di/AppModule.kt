@@ -3,9 +3,11 @@ package com.fedorinov.tpumobile.di
 import android.net.ConnectivityManager
 import com.fedorinov.tpumobile.data.database.RoomDb
 import com.fedorinov.tpumobile.data.repositories.AuthRepository
+import com.fedorinov.tpumobile.data.repositories.CommonRepository
 import com.fedorinov.tpumobile.data.rest.RestApiTpu
 import com.fedorinov.tpumobile.logic.sync.Synchronize
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationViewModel
+import com.fedorinov.tpumobile.ui.start.reg.RegistrationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext
@@ -31,8 +33,10 @@ val appModule = module {
 
     // Repositories
     single { AuthRepository(get(), androidContext().getSystemService(ConnectivityManager::class.java) as ConnectivityManager) }
+    single { CommonRepository(get()) }
 
     // ViewModels
     viewModel { AuthorizationViewModel(get()) }
+    viewModel { RegistrationViewModel(get()) }
 
 }

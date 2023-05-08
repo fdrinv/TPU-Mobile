@@ -7,35 +7,88 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Groups
+import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.fedorinov.tpumobile.R
+import com.fedorinov.tpumobile.data.database.entity.GroupEntity
 import com.fedorinov.tpumobile.ui.common.RadioButtonWithText
+import com.fedorinov.tpumobile.ui.common.list.DefaultListItem
+import com.fedorinov.tpumobile.ui.common.list.EmptyList
+import com.fedorinov.tpumobile.ui.common.text.TextBMedium
 import com.fedorinov.tpumobile.ui.start.components.LogoCompanyBrand
 import com.fedorinov.tpumobile.ui.start.components.PasswordTextField
 import com.fedorinov.tpumobile.ui.theme.PADDING_BIG
+import com.fedorinov.tpumobile.ui.theme.PADDING_MEDIUM
 import com.fedorinov.tpumobile.ui.theme.TPUMobileTheme
+import org.koin.androidx.compose.getViewModel
+
+private val LIST_GROUPS_MAX_HEIGHT = 150.dp
 
 @Composable
 fun RegistrationScreen(onBackClicked: () -> Unit) {
-    RegistrationScreenStateless(
+    val viewModel: RegistrationViewModel = getViewModel()
+    val uiState by viewModel.uiState.collectAsState()
 
+    RegistrationScreenStateless(
+        // - Поля авторизации
+        email = uiState.email,
+        onEmailChanged = {},
+        password = uiState.password,
+        onPasswordChanged = {},
+        repeatPassword = uiState.repeatPassword,
+        onRepeatPasswordChanged = {},
+        firstName = uiState.firstName,
+        onFirstNameChanged = {},
+        lastName = uiState.lastName,
+        onLastNameChanged = {},
+        gender = uiState.gender,
+        onGenderChanged = {},
+        group = uiState.group,
+        groups = uiState.groups,
+        onGroupChanged = {},
+        language = uiState.language,
+        onLanguageChanged = {},
+        phone = uiState.phone,
+        onPhoneChanged = {},
+        isConsent = uiState.isConsent,
+        onConsentChanged = {},
+        // - Создание аккаунта
+        onCreateAccountClicked = {},
+        // - Уже есть аккаунт
+        onHaveAccountClicked = onBackClicked,
+        // - Назад
+        onBackClicked = onBackClicked
     )
 }
 
@@ -56,6 +109,7 @@ private fun RegistrationScreenStateless(
     gender: Gender = Gender.MALE,
     onGenderChanged: (Gender) -> Unit = {},
     group: String = "8К91",
+    groups: List<GroupEntity> = emptyList(),
     onGroupChanged: (String) -> Unit = {},
     language: Language = Language.RUSSIAN,
     onLanguageChanged: (Language) -> Unit = {},
@@ -90,6 +144,7 @@ private fun RegistrationScreenStateless(
                 gender = gender,
                 onGenderChanged = onGenderChanged,
                 group = group,
+                groups = groups,
                 onGroupChanged = onGroupChanged,
                 language = language,
                 onLanguageChanged = onLanguageChanged,
@@ -129,6 +184,7 @@ private fun RegistrationContent(
     gender: Gender,
     onGenderChanged: (Gender) -> Unit,
     group: String,
+    groups: List<GroupEntity>,
     onGroupChanged: (String) -> Unit,
     language: Language,
     onLanguageChanged: (Language) -> Unit,
@@ -201,6 +257,15 @@ private fun RegistrationContent(
         GenderRadioButtons(
             gender = gender,
             onGenderChanged = onGenderChanged,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = PADDING_BIG)
+        )
+        // - Выбор группы
+        GroupTextField(
+            group = group,
+            groups = groups,
+            onGroupChanged = onGroupChanged,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = PADDING_BIG)
@@ -332,6 +397,99 @@ private fun GenderRadioButtons(
             text = stringResource(R.string.female),
             isSelected = gender == Gender.FEMALE,
             onSelectedChange = { onGenderChanged(Gender.FEMALE) }
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun GroupTextField(
+    modifier: Modifier = Modifier,
+    group: String,
+    groups: List<GroupEntity>,
+    onGroupChanged: (String) -> Unit,
+) {
+    var isVisibleDialog by rememberSaveable { mutableStateOf(false) }
+
+    OutlinedTextField(
+        modifier = modifier,
+        value = group,
+        onValueChange = onGroupChanged,
+        singleLine = true,
+        placeholder = {
+            Text(stringResource(R.string.text_field_group))
+        },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Outlined.Groups,
+                contentDescription = null
+            )
+        },
+        trailingIcon = {
+            Row {
+                if (group.isNotEmpty()) {
+                    IconButton(onClick = { onGroupChanged("") }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Cancel,
+                            contentDescription = null
+                        )
+                    }
+                }
+                IconButton(onClick = { isVisibleDialog = true }) {
+                    Icon(
+                        imageVector = Icons.Outlined.List,
+                        contentDescription = null
+                    )
+                }
+            }
+        }
+    )
+    if (isVisibleDialog) {
+        AlertDialog(
+            title = { Text(stringResource(R.string.text_field_choose_group)) },
+            icon = {
+                Icon(
+                    imageVector = Icons.Outlined.Groups,
+                    contentDescription = null
+                )
+            },
+            onDismissRequest = { isVisibleDialog = false },
+            confirmButton = {
+                TextButton(onClick = { isVisibleDialog = false }) {
+                    Text(stringResource(R.string.text_button_cancel))
+                }
+            },
+            text = {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    TextBMedium(
+                        text = stringResource(R.string.dialog_list_group),
+                        textAlign = TextAlign.Center
+                    )
+                    Divider(modifier = Modifier.padding(vertical = PADDING_MEDIUM))
+                    if (groups.isNotEmpty()) {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .sizeIn(maxHeight = LIST_GROUPS_MAX_HEIGHT)
+                        ) {
+                            items(groups) { gp ->
+                                DefaultListItem(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = gp.name,
+                                    onClick = {
+                                        isVisibleDialog = false
+                                        onGroupChanged(gp.name)
+                                    }
+                                )
+                            }
+                        }
+                    } else EmptyList()
+                }
+            }
         )
     }
 }

@@ -7,10 +7,12 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.fedorinov.tpumobile.ui.start.NavGraphs
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationScreen
 import com.fedorinov.tpumobile.ui.start.reg.RegistrationScreen
 import com.fedorinov.tpumobile.ui.theme.TPUMobileTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.ramcosta.composedestinations.DestinationsNavHost
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +42,8 @@ class MainActivity : ComponentActivity() {
                                 darkIcons = true
                             )
                         }
-                        RegistrationScreen(onBackClicked  = {})
+                        // Вызываем стартовый экран приложения
+                        DestinationsNavHost(navGraph = NavGraphs.root)
                     }
                 }
             }

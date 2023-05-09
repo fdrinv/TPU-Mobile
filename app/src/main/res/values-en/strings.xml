@@ -13,6 +13,7 @@
     <string name="button_sign_up">Create an account</string>
     <string name="checkbox_remember_me">Remember me?</string>
     <string name="button_forgot_password">Forgot password?</string>
+    <string name="button_already_account">I already have an account</string>
     <string name="text_or">OR</string>
 
     <string name="text_success_auth">You have successfully logged in to the system, please wait to be redirected to the main page</string>
@@ -20,6 +21,8 @@
     <string name="text_error_desc">Error description</string>
     <string name="text_error_type">Error type</string>
     <string name="text_time">Time</string>
+    <string name="text_consent">I consent to the processing of personal data</string>
+    <string name="text_personal_data">personal data</string>
 
     <string name="text_field_login">Login</string>
     <string name="text_field_password">Password</string>
@@ -28,6 +31,7 @@
     <string name="text_field_first_name">First name</string>
     <string name="text_field_last_name">Last name</string>
     <string name="text_field_group">Group</string>
+    <string name="text_field_phone_number">Phone number</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -40,6 +44,8 @@
 
     <string name="text_list_empty">List is empty</string>
 
+    <string name="enum_russian">Russian</string>
+    <string name="enum_english">English</string>
 
     <string name="exception_timeout">Timeout exceeded</string>
     <string name="exception_internet_connection">No internet connection</string>

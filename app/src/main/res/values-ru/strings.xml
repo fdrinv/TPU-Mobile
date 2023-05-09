@@ -13,6 +13,7 @@
     <string name="button_sign_up">Создать аккаунт</string>
     <string name="checkbox_remember_me">Запомнить меня?</string>
     <string name="button_forgot_password">Забыл пароль?</string>
+    <string name="button_already_account">У меня уже есть аккаунт</string>
     <string name="text_or">ИЛИ</string>
 
     <string name="text_success_auth">Вы успешно авторизировались в системе, ожидайте перенаправления на сглавную страницу</string>
@@ -20,6 +21,8 @@
     <string name="text_error_desc">Описание ошибки</string>
     <string name="text_error_type">Тип ошибки</string>
     <string name="text_time">Время</string>
+    <string name="text_consent">Я, даю согласие на обработку</string>
+    <string name="text_personal_data">персональных данных</string>
 
     <string name="text_field_login">Логин</string>
     <string name="text_field_password">Пароль</string>
@@ -28,6 +31,7 @@
     <string name="text_field_first_name">Имя</string>
     <string name="text_field_last_name">Фамилия</string>
     <string name="text_field_group">Группа</string>
+    <string name="text_field_phone_number">Номер телефона</string>
 
     <string name="male">Мужской</string>
     <string name="female">Женский</string>
@@ -39,6 +43,8 @@
     <string name="dialog_list_group">Вы можете выбрать группу из сформированного на основе введенных данных списка</string>
     <string name="text_list_empty">Список пуст</string>
 
+    <string name="enum_russian">Русский</string>
+    <string name="enum_english">Английский</string>
 
     <string name="exception_timeout">Превышено время ожидания</string>
     <string name="exception_internet_connection">Нет соединения с интернетом</string>

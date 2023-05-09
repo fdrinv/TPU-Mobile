@@ -41,18 +41,24 @@ import com.fedorinov.tpumobile.ui.start.components.AuthResultWindow
 import com.fedorinov.tpumobile.ui.start.components.LoginTextField
 import com.fedorinov.tpumobile.ui.start.components.LogoCompanyBrand
 import com.fedorinov.tpumobile.ui.start.components.PasswordTextField
+import com.fedorinov.tpumobile.ui.start.destinations.RegistrationScreenDestination
 import com.fedorinov.tpumobile.ui.theme.BUTTON_SHAPE
 import com.fedorinov.tpumobile.ui.theme.ICON_MEDIUM_SIZE
 import com.fedorinov.tpumobile.ui.theme.PADDING_BIG
 import com.fedorinov.tpumobile.ui.theme.PADDING_MEDIUM
 import com.fedorinov.tpumobile.ui.theme.TPUMobileTheme
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import org.koin.androidx.compose.getViewModel
 
 private const val WEIGHT_FOR_DIVIDER = 1f
 private const val WEIGHT_FOR_TEXT = 0.5f
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
-fun AuthorizationScreen(signUp: () -> Unit) {
+fun AuthorizationScreen(navigator: DestinationsNavigator) {
     val viewModel: AuthorizationViewModel = getViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -73,7 +79,7 @@ fun AuthorizationScreen(signUp: () -> Unit) {
         // - Войти
         signIn = { viewModel.receiveUiEvent(SignIn) },
         // - Зарегистрироваться
-        signUp = signUp
+        signUp = { navigator.navigate(RegistrationScreenDestination) }
     )
 }
 

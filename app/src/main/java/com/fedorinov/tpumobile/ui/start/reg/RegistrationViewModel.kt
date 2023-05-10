@@ -3,6 +3,8 @@ package com.fedorinov.tpumobile.ui.start.reg
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fedorinov.tpumobile.data.repositories.CommonRepository
+import com.fedorinov.tpumobile.logic.utils.checkLastCharForRegex
+import com.fedorinov.tpumobile.logic.utils.numberPhoneRegex
 import com.fedorinov.tpumobile.ui.start.reg.RegistrationUiEvent.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -88,9 +90,9 @@ class RegistrationViewModel(private val commonRepository: CommonRepository) : Vi
     }
 
     private fun changePhone(prevState: RegistrationUiState, newPhone: String): RegistrationUiState {
-        return prevState.copy(
-            phone = newPhone
-        )
+        return if (newPhone.checkLastCharForRegex(numberPhoneRegex))
+            prevState.copy(phone = newPhone)
+        else prevState
     }
 
     private fun changeConsent(prevState: RegistrationUiState, isConsent: Boolean): RegistrationUiState {

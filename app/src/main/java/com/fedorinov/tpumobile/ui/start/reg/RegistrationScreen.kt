@@ -56,6 +56,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fedorinov.tpumobile.R
 import com.fedorinov.tpumobile.data.database.entity.GroupEntity
+import com.fedorinov.tpumobile.logic.utils.mobileNumberFilter
 import com.fedorinov.tpumobile.ui.common.CheckBoxWithText
 import com.fedorinov.tpumobile.ui.common.RadioButtonWithText
 import com.fedorinov.tpumobile.ui.common.icons.BackAction
@@ -622,6 +623,7 @@ private fun PhoneTextField(
         onValueChange = onPhoneChanged,
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+        visualTransformation = { mobileNumberFilter(it) },
         placeholder = { Text(stringResource(R.string.text_field_phone_number)) },
         leadingIcon = {
             Icon(

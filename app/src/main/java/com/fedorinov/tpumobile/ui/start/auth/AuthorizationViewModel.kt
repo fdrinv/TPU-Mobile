@@ -4,15 +4,14 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fedorinov.tpumobile.data.repositories.AuthRepository
-import com.fedorinov.tpumobile.logic.sync.Synchronize
-import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.*
+import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.LoginChanged
+import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.PasswordChanged
+import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.RememberChanged
+import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.SignIn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import org.koin.android.ext.android.get
-import org.koin.java.KoinJavaComponent.inject
 
 class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewModel() {
 

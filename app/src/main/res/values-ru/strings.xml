@@ -46,6 +46,23 @@
     <string name="enum_russian">Русский</string>
     <string name="enum_english">Английский</string>
 
+    <string name="title_event_calendar">Календарь событий</string>
+
+    <string name="enum_day_monday">Понедельник</string>
+    <string name="enum_day_tuesday">Вторник</string>
+    <string name="enum_day_wednesday">Среда</string>
+    <string name="enum_day_thursday">Четверг</string>
+    <string name="enum_day_friday">Пятница</string>
+    <string name="enum_day_saturday">Суббота</string>
+
+    <string name="enum_day_monday_short">пн</string>
+    <string name="enum_day_tuesday_short">вт</string>
+    <string name="enum_day_wednesday_short">ср</string>
+    <string name="enum_day_thursday_short">чт</string>
+    <string name="enum_day_friday_short">пт</string>
+    <string name="enum_day_saturday_short">сб</string>
+
+
     <string name="exception_timeout">Превышено время ожидания</string>
     <string name="exception_internet_connection">Нет соединения с интернетом</string>
     <string name="exception_empty_response">Сервер вернул пустой ответ</string>

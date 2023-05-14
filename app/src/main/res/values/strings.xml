@@ -48,6 +48,21 @@
     <string name="enum_russian">Russian</string>
     <string name="enum_english">English</string>
 
+    <string name="title_event_calendar">Event Calendar</string>
+
+    <string name="enum_day_monday">Monday</string>
+    <string name="enum_day_tuesday">Tuesday</string>
+    <string name="enum_day_wednesday">Wednesday</string>
+    <string name="enum_day_thursday">Thursday</string>
+    <string name="enum_day_friday">Friday</string>
+    <string name="enum_day_saturday">Saturday</string>
+
+    <string name="enum_day_monday_short">mo</string>
+    <string name="enum_day_tuesday_short">tu</string>
+    <string name="enum_day_wednesday_short">we</string>
+    <string name="enum_day_thursday_short">th</string>
+    <string name="enum_day_friday_short">fr</string>
+    <string name="enum_day_saturday_short">sa</string>
 
     <string name="exception_timeout">Timeout exceeded</string>
     <string name="exception_internet_connection">No internet connection</string>

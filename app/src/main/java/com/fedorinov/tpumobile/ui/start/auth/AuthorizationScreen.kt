@@ -36,12 +36,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.fedorinov.tpumobile.R
 import com.fedorinov.tpumobile.ui.common.CheckBoxWithText
+import com.fedorinov.tpumobile.ui.destinations.RegistrationScreenDestination
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.*
 import com.fedorinov.tpumobile.ui.start.components.AuthResultWindow
 import com.fedorinov.tpumobile.ui.start.components.LoginTextField
 import com.fedorinov.tpumobile.ui.start.components.LogoCompanyBrand
 import com.fedorinov.tpumobile.ui.start.components.PasswordTextField
-import com.fedorinov.tpumobile.ui.start.destinations.RegistrationScreenDestination
 import com.fedorinov.tpumobile.ui.theme.BUTTON_SHAPE
 import com.fedorinov.tpumobile.ui.theme.ICON_MEDIUM_SIZE
 import com.fedorinov.tpumobile.ui.theme.PADDING_BIG

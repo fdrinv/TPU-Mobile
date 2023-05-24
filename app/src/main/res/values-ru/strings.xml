@@ -16,7 +16,7 @@
     <string name="button_already_account">У меня уже есть аккаунт</string>
     <string name="text_or">ИЛИ</string>
 
-    <string name="text_success_auth">Вы успешно авторизировались в системе, ожидайте перенаправления на сглавную страницу</string>
+    <string name="text_success_auth">Вы успешно авторизировались в системе, ожидайте перенаправления на главную страницу</string>
     <string name="text_unknown_auth_error">Непредвиденная ошибка</string>
     <string name="text_error_desc">Описание ошибки</string>
     <string name="text_error_type">Тип ошибки</string>
@@ -51,5 +51,6 @@
     <string name="exception_empty_response">Сервер вернул пустой ответ</string>
     <string name="exception_other_response">Сервер вернул ответ с кодом %1$d</string>
     <string name="exception_no_internet_connection">Отсутствует подключение к интернету</string>
+    <string name="exception_failed_save_token">Не удалось сохранить токен, возможно он не был получен от сервера</string>
 
 </resources>

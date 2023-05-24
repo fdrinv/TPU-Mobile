@@ -1,5 +1,5 @@
 plugins {
-    id "com.google.protobuf" version "0.8.17"
+    id "com.google.protobuf" version "0.9.0"
     id 'org.jetbrains.kotlin.android'
     id 'com.android.application'
     id 'kotlin-parcelize'
@@ -111,6 +111,24 @@ android {
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }
+    protobuf {
+        protoc {
+            artifact = "com.google.protobuf:protoc:3.18.0"
+        }
+
+        // Generates the java Protobuf-lite code for the Protobufs in this project. See
+        // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+        // for more information.
+        generateProtoTasks {
+            all().each { task ->
+                task.builtins {
+                    java {
+                        option 'lite'
+                    }
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -167,6 +185,10 @@ dependencies {
     implementation "io.insert-koin:koin-androidx-workmanager:$koin_version"
     implementation "io.insert-koin:koin-androidx-navigation:$koin_version"
     implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+
+    // Protobuf
+    implementation  "androidx.datastore:datastore:1.0.0"
+    implementation  "com.google.protobuf:protobuf-javalite:3.19.2"
 
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:$work_version"

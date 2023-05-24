@@ -2,10 +2,16 @@ package com.fedorinov.tpumobile.logic.sync
 
 import android.util.Log
 import com.fedorinov.tpumobile.data.database.RoomDb
+import com.fedorinov.tpumobile.data.database.dao.GroupDao
+import com.fedorinov.tpumobile.data.database.dao.MenuItemDao
 import com.fedorinov.tpumobile.data.database.entity.GroupEntity
+import com.fedorinov.tpumobile.data.database.entity.MenuItemEntity
 import com.fedorinov.tpumobile.data.database.entity.SynchronizeEntity
+import com.fedorinov.tpumobile.data.repositories.AuthRepository
 import com.fedorinov.tpumobile.data.rest.RestApiTpu
 import com.fedorinov.tpumobile.data.rest.model.response.GroupResponse
+import com.fedorinov.tpumobile.data.rest.model.response.MenuItemResponse
+import kotlinx.coroutines.flow.firstOrNull
 import retrofit2.Response
 import java.util.Locale
 import java.util.UUID
@@ -15,14 +21,13 @@ import java.util.UUID
  */
 class Synchronize(
     private val db: RoomDb,
-    private val restApi: RestApiTpu
-) {
+    private val restApi: RestApiTpu,
 
-    //region Карты сопоставленных идентификаторов
-    // - externalId - выступает в роли ключа (так как он будет уникальным для каждой записи)
-    // - id - выступает в роли значения (уникальный идентификатор записи)
-    private val groupIds = mutableMapOf<UUID, Int>()
-    //endregion
+    private val authRepository: AuthRepository,
+
+    private val groupDao: GroupDao,
+    private val menuItemDao: MenuItemDao
+) {
 
     //region План синхронизации
     // - Учебные группы
@@ -31,9 +36,16 @@ class Synchronize(
         name = "Учебные группы",
         estimatedSize = 10
     )
+    // - Пункты главного меню
+    private val syncMenuItems = SyncInfoItem(
+        id = 2,
+        name = "Пункты меню",
+        estimatedSize = 60
+    )
     // - Список на синхронизацию
     private val syncListDictionaries = listOf(
-        syncGroups  // Независим (среди первых)
+        syncGroups,  // Независим (среди первых)
+        syncMenuItems
     )
     //endregion
 
@@ -42,6 +54,10 @@ class Synchronize(
      */
     suspend fun doSync() {
         Log.i(TAG, "doSync: is started!")
+        // - externalId - выступает в роли ключа (так как он будет уникальным для каждой записи)
+        // - id - выступает в роли значения (уникальный идентификатор записи)
+        val groups: Map<UUID, Int> = groupDao.selectAllOnce().associate { it.externalId!! to it.id }
+        val menuItems: Map<UUID, Int> = menuItemDao.selectAllOnce().associate { it.externalId!! to it.id }
 
         try {
             Log.i(TAG, "doSync: start syncing...")
@@ -51,6 +67,7 @@ class Synchronize(
 
                 when(item) {
                     syncGroups -> syncGroups()
+                    syncMenuItems -> syncMenuItems()
                 }
             }
 
@@ -86,7 +103,47 @@ class Synchronize(
                 } else {
                     dao.insert(dbRec).toInt()
                 }
-                groupIds[dbRec.externalId!!] = localId
+                // groups[dbRec.externalId!!] = localId
+            },
+            doDelete = { dbRec ->
+                dao.deleteById(dbRec.id)
+            }
+        )
+    }
+
+    /**
+     * Загрузка пунктов меню.
+     */
+    private suspend fun syncMenuItems() {
+        val dao = db.menuItemDao()
+        sync<MenuItemResponse, MenuItemEntity, SynchronizeEntity>(
+            doRestRequest = {
+                restApi.api.getMenuItems(
+                    token = "Bearer ${authRepository.userPreferencesFlow.firstOrNull()?.userToken}",
+                    language = Locale.getDefault().toString()
+                )
+            },
+            doDbSelect = {
+                dao.selectSyncOnce()
+            },
+            doCompare = { dbRec, restRec ->
+                dbRec.externalId == UUID.fromString(restRec.id)
+            },
+            doConvertToEntity = { restRec, syncRec ->
+                restRec.toEntity(
+                    withId = syncRec?.id,
+                    articleIdMap = mapOf(),
+                    imageIdMap = mapOf()
+                )
+            },
+            doUpdateOrInsert = { dbRec, _, isUpdate ->
+                val localId = if (isUpdate) {
+                    dao.update(dbRec)
+                    dbRec.id
+                } else {
+                    dao.insert(dbRec).toInt()
+                }
+                // groupIds[dbRec.externalId!!] = localId
             },
             doDelete = { dbRec ->
                 dao.deleteById(dbRec.id)

@@ -91,7 +91,7 @@ fun AuthResultWindow(
                                         color = MaterialTheme.colorScheme.onError,
                                     )
                                     TextBMedium(
-                                        text = response.type,
+                                        text = response.type ?: "",
                                         color = MaterialTheme.colorScheme.onError,
                                     )
                                 }
@@ -106,7 +106,7 @@ fun AuthResultWindow(
                                             color = MaterialTheme.colorScheme.onError,
                                         )
                                         TextBMedium(
-                                            text = response.date,
+                                            text = response.date ?: "",
                                             color = MaterialTheme.colorScheme.onError,
                                             textAlign = TextAlign.Center,
                                         )

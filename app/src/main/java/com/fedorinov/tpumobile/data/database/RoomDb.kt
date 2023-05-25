@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.fedorinov.tpumobile.data.database.dao.GroupDao
-import com.fedorinov.tpumobile.data.database.dao.MenuItemDao
+import com.fedorinov.tpumobile.data.database.dao.LinkDao
 import com.fedorinov.tpumobile.data.database.entity.GroupEntity
-import com.fedorinov.tpumobile.data.database.entity.MenuItemEntity
+import com.fedorinov.tpumobile.data.database.entity.LinkEntity
 import kotlinx.coroutines.CoroutineScope
 
 // - Название файла базы данных
@@ -20,13 +20,13 @@ private const val DB_VERSION = 1
     exportSchema = true,
     entities = [
         GroupEntity::class,
-        MenuItemEntity::class
+        LinkEntity::class
     ]
 )
 abstract class RoomDb : RoomDatabase() {
 
     abstract fun groupDao() : GroupDao
-    abstract fun menuItemDao() : MenuItemDao
+    abstract fun linkDao() : LinkDao
 
     companion object {
         // - Конструктор подключения к бд

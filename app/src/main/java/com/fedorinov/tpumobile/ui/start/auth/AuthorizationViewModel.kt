@@ -90,11 +90,16 @@ class AuthorizationViewModel(private val authRepository: AuthRepository) : ViewM
                     )
                 }
                 // 3.1.1 Сохраняем токен в хранилище
-                (uiState.value.authState as Success).authResponse?.token?.let { token ->
-                    authRepository.updateToken(token)
-                } ?: throw Exception(
-                    App.getAppResources()?.getString(R.string.exception_failed_save_token)
-                )
+               authRepository.updateAllDataInDateStore(
+                    token = response.token ?: throw Exception(App.getAppResources()?.getString(R.string.exception_failed_save_token)),
+                    email = response.user.email ?: "",
+                    firstName = response.user.firstName ?: "",
+                    lastName = response.user.lastName ?: "",
+                    phoneNumber = response.user.phoneNumber ?: "",
+                    groupName = response.user.groupName ?: "",
+                    languageId = response.user.languageId ?: "",
+                    languageName = response.user.languageName ?: ""
+               )
             }
             // 3.2 В противном случае вывести информацию по неудачной попытке авторизации.
             else {

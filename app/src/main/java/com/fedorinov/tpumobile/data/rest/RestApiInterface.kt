@@ -4,7 +4,7 @@ import com.fedorinov.tpumobile.data.rest.model.request.AuthRequest
 import com.fedorinov.tpumobile.data.rest.model.request.RegistrationRequest
 import com.fedorinov.tpumobile.data.rest.model.response.AuthResponse
 import com.fedorinov.tpumobile.data.rest.model.response.GroupResponse
-import com.fedorinov.tpumobile.data.rest.model.response.MenuItemResponse
+import com.fedorinov.tpumobile.data.rest.model.response.LinkResponse
 import com.fedorinov.tpumobile.data.rest.model.response.RegistrationResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -12,6 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface RestApiInterface {
 
@@ -36,9 +37,11 @@ interface RestApiInterface {
     ) : Response<List<GroupResponse>>
 
     @GET(REST_GET_MENU_ITEMS)
-    suspend fun getMenuItems(
+    suspend fun getLinks(
         @Header("Authorization") token: String,
-        @Header("Accept-Language") language: String
-    ) : Response<List<MenuItemResponse>>
+        @Header("Accept-Language") language: String,
+        @Query("language") languageId: String,
+        @Query(encoded = true, value = "email") email: String
+    ) : Response<List<LinkResponse>>
 
 }

@@ -31,7 +31,7 @@ val appModule = module {
 
     // Dao
     single { get<RoomDb>().groupDao() }
-    single { get<RoomDb>().menuItemDao() }
+    single { get<RoomDb>().linkDao() }
 
     // Rest-Api
     single { RestApiTpu() }

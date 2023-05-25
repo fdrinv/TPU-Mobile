@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "88dad9cf71bcccca6c71a9169fd9c467",
+    "identityHash": "e130bf5f6613f822902e7db131bc0aa9",
     "entities": [
       {
         "tableName": "group",
@@ -59,7 +59,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "menu_item",
+        "tableName": "link",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `external_id` BLOB, `name` TEXT NOT NULL, `level` INTEGER NOT NULL, `position` INTEGER NOT NULL, `type` TEXT NOT NULL, `url` TEXT, `article_id` INTEGER, `image` TEXT, `image_id` INTEGER)",
         "fields": [
           {
@@ -131,31 +131,31 @@
         },
         "indices": [
           {
-            "name": "index_menu_item_external_id",
+            "name": "index_link_external_id",
             "unique": false,
             "columnNames": [
               "external_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_menu_item_external_id` ON `${TABLE_NAME}` (`external_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_link_external_id` ON `${TABLE_NAME}` (`external_id`)"
           },
           {
-            "name": "index_menu_item_article_id",
+            "name": "index_link_article_id",
             "unique": false,
             "columnNames": [
               "article_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_menu_item_article_id` ON `${TABLE_NAME}` (`article_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_link_article_id` ON `${TABLE_NAME}` (`article_id`)"
           },
           {
-            "name": "index_menu_item_image_id",
+            "name": "index_link_image_id",
             "unique": false,
             "columnNames": [
               "image_id"
             ],
             "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_menu_item_image_id` ON `${TABLE_NAME}` (`image_id`)"
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_link_image_id` ON `${TABLE_NAME}` (`image_id`)"
           }
         ],
         "foreignKeys": []
@@ -164,7 +164,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '88dad9cf71bcccca6c71a9169fd9c467')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e130bf5f6613f822902e7db131bc0aa9')"
     ]
   }
 }

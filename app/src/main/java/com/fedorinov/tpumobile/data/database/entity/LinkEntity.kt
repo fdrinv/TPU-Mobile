@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 /**
- * Сущность "Пункт меню".
+ * Сущность "Ссылка".
  * Сущность содержит в себе информацию:
  * - название пункта
  * - уровень пункта в дереве
@@ -19,20 +19,23 @@ import java.util.UUID
  * - * список детей (подпунктов)
  */
 @Entity(
-    tableName = "menu_item",
+    tableName = "link",
     indices = [
         Index(value = ["external_id"]),
         Index(value = ["article_id"]),
         Index(value = ["image_id"]),
     ]
 )
-data class MenuItemEntity(
+data class LinkEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int = 0,
 
     @ColumnInfo(name = "external_id")
     override val externalId: UUID? = null,
+
+    @ColumnInfo(name = "parent_id")
+    val parentId: Int? = null,
 
     @ColumnInfo(name = "name")
     val name: String,

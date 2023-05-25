@@ -38,6 +38,78 @@ class AuthRepository(
             .build()
     }
 
+    suspend fun updateEmail(newEmail: String) = dataStore.updateData { currentPreferences ->
+        currentPreferences
+            .toBuilder()
+            .setEmail(newEmail)
+            .build()
+    }
+
+    suspend fun updateFirstName(newFirstName: String) = dataStore.updateData { currentPreferences ->
+        currentPreferences
+            .toBuilder()
+            .setFirstName(newFirstName)
+            .build()
+    }
+
+    suspend fun updateLastName(newLastName: String) = dataStore.updateData { currentPreferences ->
+        currentPreferences
+            .toBuilder()
+            .setLastName(newLastName)
+            .build()
+    }
+
+    suspend fun updatePhoneNumber(newPhoneNumber: String) = dataStore.updateData { currentPreferences ->
+        currentPreferences
+            .toBuilder()
+            .setPhoneNumber(newPhoneNumber)
+            .build()
+    }
+
+    suspend fun updateGroupName(newGroupName: String) = dataStore.updateData { currentPreferences ->
+        currentPreferences
+            .toBuilder()
+            .setGroupName(newGroupName)
+            .build()
+    }
+
+    suspend fun updateLanguageId(newLanguageId: String) = dataStore.updateData { currentPreferences ->
+        currentPreferences
+            .toBuilder()
+            .setLanguageId(newLanguageId)
+            .build()
+    }
+
+    suspend fun updateLanguageName(newLanguageName: String) = dataStore.updateData { currentPreferences ->
+        currentPreferences
+            .toBuilder()
+            .setLanguageName(newLanguageName)
+            .build()
+    }
+
+    suspend fun updateAllDataInDateStore(
+        token: String = "",
+        email: String = "",
+        firstName: String = "",
+        lastName: String = "",
+        phoneNumber: String = "",
+        groupName: String = "",
+        languageId: String = "",
+        languageName: String = ""
+    ) = dataStore.updateData { currentPreferences ->
+        currentPreferences
+            .toBuilder()
+            .setUserToken(token)
+            .setEmail(email)
+            .setFirstName(firstName)
+            .setLastName(lastName)
+            .setPhoneNumber(phoneNumber)
+            .setGroupName(groupName)
+            .setLanguageId(languageId)
+            .setLanguageName(languageName)
+            .build()
+    }
+
     suspend fun authorization(email: String, password: String, rememberMe: Boolean): AuthResponse  = try {
         // 1. Осуществляем запрос к серверу на авторизацию в системе
         val response = checkAuthResponse(

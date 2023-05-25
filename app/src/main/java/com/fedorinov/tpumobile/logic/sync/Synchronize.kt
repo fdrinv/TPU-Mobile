@@ -3,14 +3,15 @@ package com.fedorinov.tpumobile.logic.sync
 import android.util.Log
 import com.fedorinov.tpumobile.data.database.RoomDb
 import com.fedorinov.tpumobile.data.database.dao.GroupDao
-import com.fedorinov.tpumobile.data.database.dao.MenuItemDao
+import com.fedorinov.tpumobile.data.database.dao.LinkDao
 import com.fedorinov.tpumobile.data.database.entity.GroupEntity
-import com.fedorinov.tpumobile.data.database.entity.MenuItemEntity
+import com.fedorinov.tpumobile.data.database.entity.LinkEntity
 import com.fedorinov.tpumobile.data.database.entity.SynchronizeEntity
 import com.fedorinov.tpumobile.data.repositories.AuthRepository
 import com.fedorinov.tpumobile.data.rest.RestApiTpu
 import com.fedorinov.tpumobile.data.rest.model.response.GroupResponse
-import com.fedorinov.tpumobile.data.rest.model.response.MenuItemResponse
+import com.fedorinov.tpumobile.data.rest.model.response.LinkResponse
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import retrofit2.Response
 import java.util.Locale
@@ -26,7 +27,7 @@ class Synchronize(
     private val authRepository: AuthRepository,
 
     private val groupDao: GroupDao,
-    private val menuItemDao: MenuItemDao
+    private val linkDao: LinkDao
 ) {
 
     //region План синхронизации
@@ -57,7 +58,7 @@ class Synchronize(
         // - externalId - выступает в роли ключа (так как он будет уникальным для каждой записи)
         // - id - выступает в роли значения (уникальный идентификатор записи)
         val groups: Map<UUID, Int> = groupDao.selectAllOnce().associate { it.externalId!! to it.id }
-        val menuItems: Map<UUID, Int> = menuItemDao.selectAllOnce().associate { it.externalId!! to it.id }
+        val menuItems: Map<UUID, Int> = linkDao.selectAllOnce().associate { it.externalId!! to it.id }
 
         try {
             Log.i(TAG, "doSync: start syncing...")
@@ -67,7 +68,7 @@ class Synchronize(
 
                 when(item) {
                     syncGroups -> syncGroups()
-                    syncMenuItems -> syncMenuItems()
+                    syncMenuItems -> syncLinks()
                 }
             }
 
@@ -114,13 +115,15 @@ class Synchronize(
     /**
      * Загрузка пунктов меню.
      */
-    private suspend fun syncMenuItems() {
-        val dao = db.menuItemDao()
-        sync<MenuItemResponse, MenuItemEntity, SynchronizeEntity>(
+    private suspend fun syncLinks() {
+        val dao = db.linkDao()
+        sync<LinkResponse, LinkEntity, SynchronizeEntity>(
             doRestRequest = {
-                restApi.api.getMenuItems(
+                restApi.api.getLinks(
                     token = "Bearer ${authRepository.userPreferencesFlow.firstOrNull()?.userToken}",
-                    language = Locale.getDefault().toString()
+                    language = Locale.getDefault().toString(),
+                    languageId = authRepository.userPreferencesFlow.first().languageId,
+                    email = authRepository.userPreferencesFlow.first().email
                 )
             },
             doDbSelect = {
@@ -136,19 +139,36 @@ class Synchronize(
                     imageIdMap = mapOf()
                 )
             },
-            doUpdateOrInsert = { dbRec, _, isUpdate ->
+            doUpdateOrInsert = { dbRec, restRec, isUpdate ->
+                // - Получаем локальный идентификатор вставленной сущности
                 val localId = if (isUpdate) {
                     dao.update(dbRec)
                     dbRec.id
                 } else {
                     dao.insert(dbRec).toInt()
                 }
-                // groupIds[dbRec.externalId!!] = localId
+
+                Log.i(TAG, "-------------------------------------")
+                Log.i(TAG, "Рекурсивный алгоритм начал работу!")
+                Log.i(TAG, "Локальный идентификатор сущности родителя localId = $localId")
+                Log.i(TAG, "Объект рекурсивного прохождения restRec = $restRec")
+                Log.i(TAG, "-------------------------------------")
+
             },
             doDelete = { dbRec ->
                 dao.deleteById(dbRec.id)
             }
         )
+    }
+
+    var numberOfIteration = 0L
+
+    private suspend fun recursiveInsertChildren(parentLocalId: Int, localId: Int, restRec: LinkResponse, dbRec: LinkEntity) {
+
+        numberOfIteration++
+        Log.i(TAG, "Рекурсивный проход по дереву номер $numberOfIteration")
+
+
     }
 
     /**

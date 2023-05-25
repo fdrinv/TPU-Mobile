@@ -7,16 +7,24 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.fedorinov.tpumobile.logic.sync.Synchronize
 import com.fedorinov.tpumobile.ui.NavGraphs
 import com.fedorinov.tpumobile.ui.theme.TPUMobileTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ramcosta.composedestinations.DestinationsNavHost
+import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
+import org.koin.androidx.compose.inject
+import org.koin.java.KoinJavaComponent.inject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // - Устанавливаем заставку Splash-экрана
         installSplashScreen()
-
+        /*runBlocking {
+            val synchronize: Synchronize by inject<Synchronize>(Synchronize::class.java)
+            synchronize.doSync()
+        }*/
         super.onCreate(savedInstanceState)
 
         // - Инициализируем Compose

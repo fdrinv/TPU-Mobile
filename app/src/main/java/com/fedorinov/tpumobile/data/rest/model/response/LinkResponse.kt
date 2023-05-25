@@ -1,9 +1,6 @@
 package com.fedorinov.tpumobile.data.rest.model.response
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
-import com.fedorinov.tpumobile.data.database.entity.GroupEntity
-import com.fedorinov.tpumobile.data.database.entity.MenuItemEntity
+import com.fedorinov.tpumobile.data.database.entity.LinkEntity
 import com.google.gson.annotations.SerializedName
 import java.util.UUID
 
@@ -29,7 +26,7 @@ import java.util.UUID
  *       "imageId": "0EF1D11C-0A77-4A96-B009-1956D385D8ED"
  *       },
  */
-data class MenuItemResponse(
+data class LinkResponse(
     @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
     @SerializedName("level") val level: Int,
@@ -39,6 +36,7 @@ data class MenuItemResponse(
     @SerializedName("idArticle") val articleId: String? = null,
     @SerializedName("image") val image: String? = null,
     @SerializedName("imageId") val imageId: String? = null,
+    @SerializedName("children") val children: List<LinkResponse>? = null,
 ) {
     /**
      * Преобразовать объект в Entity.
@@ -49,10 +47,10 @@ data class MenuItemResponse(
         withId: Int? = null,
         articleIdMap: Map<UUID, Int>,
         imageIdMap: Map<UUID, Int>
-    ): MenuItemEntity {
+    ): LinkEntity {
         val localArticleId: Int? = if (articleId != null) articleIdMap[UUID.fromString(articleId)] else null
         val localImageId: Int? = if (imageId != null) imageIdMap[UUID.fromString(imageId)] else null
-        return MenuItemEntity(
+        return LinkEntity(
             id = withId ?: 0,
             externalId = UUID.fromString(id),
             name = name,

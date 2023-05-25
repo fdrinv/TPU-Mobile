@@ -21,5 +21,6 @@ data class UserResponse(
     @SerializedName("gender") val gender: String? = null,
     @SerializedName("phoneNumber") val phoneNumber: String? = null,
     @SerializedName("groupName") val groupName: String? = null,
+    @SerializedName("languageId") val languageId: String? = null,
     @SerializedName("languageName") val languageName: String? = null,
 )

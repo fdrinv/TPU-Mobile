@@ -24,6 +24,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -38,7 +39,7 @@ import com.fedorinov.tpumobile.R
 import com.fedorinov.tpumobile.ui.common.CheckBoxWithText
 import com.fedorinov.tpumobile.ui.destinations.EventCalendarScreenDestination
 import com.fedorinov.tpumobile.ui.destinations.RegistrationScreenDestination
-import com.fedorinov.tpumobile.ui.destinations.RegistrationScreenDestination
+import com.fedorinov.tpumobile.ui.start.auth.AuthState.*
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.*
 import com.fedorinov.tpumobile.ui.start.components.AuthResultWindow
 import com.fedorinov.tpumobile.ui.start.components.LoginTextField
@@ -64,6 +65,11 @@ fun AuthorizationScreen(navigator: DestinationsNavigator) {
     val viewModel: AuthorizationViewModel = getViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
+    // - Перейти на главный экран при успешной авторизации в системе
+    LaunchedEffect(uiState.authState) {
+        if (uiState.authState is Success) navigator.navigate(EventCalendarScreenDestination)
+    }
+
     AuthorizationScreenStateless(
         // - Состояние окна с результатом авторизации
         loginState = uiState.authState,
@@ -81,7 +87,7 @@ fun AuthorizationScreen(navigator: DestinationsNavigator) {
         // - Войти
         signIn = { viewModel.receiveUiEvent(SignIn) },
         // - Зарегистрироваться
-        signUp = { navigator.navigate(EventCalendarScreenDestination) }
+        signUp = { navigator.navigate(RegistrationScreenDestination) }
     )
 }
 
@@ -89,7 +95,7 @@ fun AuthorizationScreen(navigator: DestinationsNavigator) {
 @Composable
 private fun AuthorizationScreenStateless(
     // - Состояние окна с результатом авторизации
-    loginState: AuthState = AuthState.Loading,
+    loginState: AuthState = Loading,
     // - Поле логина
     login: String = "fedorinovea",
     onLoginChanged: (String) -> Unit = {},
@@ -230,7 +236,7 @@ private fun AuthorizationContent(
         // - Зарегистрироваться
         OutlinedButton(
             onClick = signUp,
-            enabled = authState != AuthState.Loading,
+            enabled = authState != Loading,
             shape = RoundedCornerShape(BUTTON_SHAPE),
             modifier = Modifier
                 .fillMaxWidth()

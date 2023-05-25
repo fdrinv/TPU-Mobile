@@ -29,7 +29,7 @@ import java.util.UUID
 data class MenuItemEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    override val id: Int = 0,
+    val id: Int = 0,
 
     @ColumnInfo(name = "external_id")
     override val externalId: UUID? = null,
@@ -57,4 +57,4 @@ data class MenuItemEntity(
 
     @ColumnInfo(name = "image_id")
     val imageId: Int? = null,
-) : BaseServerEntity(id, externalId)
+) : BaseServerEntity(externalId)

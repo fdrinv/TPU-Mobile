@@ -12,3 +12,5 @@ val BUTTON_SHAPE = 9.dp
 val ICON_SMALL_SIZE = 24.dp
 val ICON_MEDIUM_SIZE = 48.dp
 val ICON_BIG_SIZE = 96.dp
+
+val LIST_ITEM_SIZE = 88.dp

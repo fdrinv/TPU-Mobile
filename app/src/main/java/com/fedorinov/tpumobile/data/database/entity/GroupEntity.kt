@@ -20,7 +20,7 @@ import java.util.UUID
 data class GroupEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    override val id: Int = 0,
+    val id: Int = 0,
 
     @ColumnInfo(name = "external_id")
     override val externalId: UUID? = null,
@@ -33,4 +33,4 @@ data class GroupEntity(
 
     @ColumnInfo(name = "academic_plan_url")
     val academicPlanUrl: String
-) : BaseServerEntity(id, externalId)
+) : BaseServerEntity(externalId)

@@ -10,19 +10,20 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import coil.compose.AsyncImage
 import com.ramcosta.composedestinations.annotation.Destination
 
 @Composable
 @Destination
 fun MenuScreen() {
-    MenuScreenStateless()
+    // MenuScreenStateless()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MenuScreenStateless(
     // Заголовок
-    title: String = "О университете",
+    title: String = "О ТПУ",
     // - Нажатие на меню
     onMenuClicked: () -> Unit = {}
 ) {

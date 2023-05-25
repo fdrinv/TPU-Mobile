@@ -38,6 +38,7 @@ import com.fedorinov.tpumobile.R
 import com.fedorinov.tpumobile.ui.common.CheckBoxWithText
 import com.fedorinov.tpumobile.ui.destinations.EventCalendarScreenDestination
 import com.fedorinov.tpumobile.ui.destinations.RegistrationScreenDestination
+import com.fedorinov.tpumobile.ui.destinations.RegistrationScreenDestination
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.*
 import com.fedorinov.tpumobile.ui.start.components.AuthResultWindow
 import com.fedorinov.tpumobile.ui.start.components.LoginTextField

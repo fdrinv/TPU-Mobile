@@ -68,5 +68,6 @@
     <string name="exception_empty_response">Server returned an empty response</string>
     <string name="exception_other_response">Server returned a response with the code %1$d</string>
     <string name="exception_no_internet_connection">No internet connection</string>
+    <string name="exception_failed_save_token">Failed to save the token, it may not have been received from the server</string>
 
 </resources>

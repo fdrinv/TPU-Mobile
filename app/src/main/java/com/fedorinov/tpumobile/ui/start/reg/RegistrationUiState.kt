@@ -1,5 +1,6 @@
 package com.fedorinov.tpumobile.ui.start.reg
 
+import com.fedorinov.tpumobile.data.common.UserInfo
 import com.fedorinov.tpumobile.data.database.entity.GroupEntity
 
 data class RegistrationUiState(
@@ -14,4 +15,15 @@ data class RegistrationUiState(
     val language: Language = Language.getLanguage(),
     val phone: String = "",
     val isConsent: Boolean = false,
-)
+) {
+    fun toUserInfo() = UserInfo(
+        email = this.email,
+        password = this.password,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        gender = this.gender,
+        group = this.group,
+        languageId = this.language.id,
+        phone = this.phone
+    )
+}

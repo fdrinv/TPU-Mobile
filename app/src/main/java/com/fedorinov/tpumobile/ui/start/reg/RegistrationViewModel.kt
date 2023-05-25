@@ -2,10 +2,13 @@ package com.fedorinov.tpumobile.ui.start.reg
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.fedorinov.tpumobile.data.common.UserInfo
 import com.fedorinov.tpumobile.data.repositories.CommonRepository
+import com.fedorinov.tpumobile.data.repositories.RegistrationRepository
 import com.fedorinov.tpumobile.logic.utils.checkLastCharForRegex
 import com.fedorinov.tpumobile.logic.utils.numberPhoneRegex
 import com.fedorinov.tpumobile.ui.start.reg.RegistrationUiEvent.*
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -13,7 +16,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class RegistrationViewModel(private val commonRepository: CommonRepository) : ViewModel() {
+class RegistrationViewModel(
+    private val commonRepository: CommonRepository,
+    private val registrationRepository: RegistrationRepository
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<RegistrationUiState> = MutableStateFlow(RegistrationUiState())
     val uiState: StateFlow<RegistrationUiState> = _uiState
@@ -32,8 +38,19 @@ class RegistrationViewModel(private val commonRepository: CommonRepository) : Vi
                 is LanguageChanged -> changeLanguage(prevState, currentEvent.language)
                 is PhoneChanged -> changePhone(prevState, currentEvent.newPhone)
                 is ConsentChanged -> changeConsent(prevState, currentEvent.isConsent)
+                is CreateAccount -> {
+                    createAccount(prevState, currentEvent.navigator)
+                    uiState.value
+                }
             }
         }
+    }
+
+    private fun createAccount(prevState: RegistrationUiState, navigator: DestinationsNavigator) = viewModelScope.launch {
+        // 1. Формируем из состояния экрана модель для запроса
+        val userInfoForRegistration: UserInfo = uiState.value.toUserInfo()
+        // 2. Отправляем запрос на сервер
+        registrationRepository.registration(userInfoForRegistration)
     }
 
     private fun changeEmail(prevState: RegistrationUiState, newEmail: String): RegistrationUiState {

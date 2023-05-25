@@ -12,27 +12,27 @@ import com.fedorinov.tpumobile.data.database.entity.SynchronizeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface GroupDao {
+interface MenuItemDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(group: GroupEntity): Long
+    suspend fun insert(menuItem: MenuItemEntity): Long
 
-    @Query("SELECT id, external_id FROM 'group'")
+    @Query("SELECT id, external_id FROM 'menu_item'")
     suspend fun selectSyncOnce(): List<SynchronizeEntity>
 
-    @Query("SELECT * FROM 'group'")
-    suspend fun selectAllOnce(): List<GroupEntity>
+    @Query("SELECT * FROM 'menu_item'")
+    suspend fun selectAllOnce(): List<MenuItemEntity>
 
-    @Query("SELECT * FROM 'group' ORDER BY name")
-    fun selectAllAsFlow(): Flow<List<GroupEntity>>
+    @Query("SELECT * FROM 'menu_item' ORDER BY position")
+    fun selectAllAsFlow(): Flow<List<MenuItemEntity>>
 
     @Update
-    suspend fun update(group: GroupEntity)
+    suspend fun update(group: MenuItemEntity)
 
-    @Query("DELETE FROM 'group' WHERE id=:id")
+    @Query("DELETE FROM 'menu_item' WHERE id=:id")
     suspend fun deleteById(id: Int)
 
     @Delete
-    suspend fun delete(group: GroupEntity)
+    suspend fun delete(group: MenuItemEntity)
 
 }

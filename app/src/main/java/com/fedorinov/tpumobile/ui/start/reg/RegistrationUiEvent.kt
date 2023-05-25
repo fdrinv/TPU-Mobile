@@ -1,6 +1,8 @@
 package com.fedorinov.tpumobile.ui.start.reg
 
+import com.fedorinov.tpumobile.data.common.UserInfo
 import com.fedorinov.tpumobile.ui.start.reg.RegistrationUiEvent.EmailChanged
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 /**
  * События экрана RegistrationScreen.
@@ -15,6 +17,7 @@ import com.fedorinov.tpumobile.ui.start.reg.RegistrationUiEvent.EmailChanged
  * [LanguageChanged] - Выбор языка.
  * [PhoneChanged] - Изменение номера телефона.
  * [ConsentChanged] - Флаг соглашения.
+ * [CreateAccount] - Создание аккаунта.
  *
  */
 sealed class RegistrationUiEvent {
@@ -28,4 +31,5 @@ sealed class RegistrationUiEvent {
     data class LanguageChanged(val language: Language) : RegistrationUiEvent()
     data class PhoneChanged(val newPhone: String) : RegistrationUiEvent()
     data class ConsentChanged(val isConsent: Boolean) : RegistrationUiEvent()
+    data class CreateAccount(val navigator: DestinationsNavigator) : RegistrationUiEvent()
 }

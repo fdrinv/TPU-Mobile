@@ -1,6 +1,8 @@
 package com.fedorinov.tpumobile.data.rest.model.response
 
 import com.fedorinov.tpumobile.data.database.entity.LinkEntity
+import com.fedorinov.tpumobile.data.database.enum.ContentType
+import com.fedorinov.tpumobile.ui.model.LinkItem
 import com.google.gson.annotations.SerializedName
 import java.util.UUID
 
@@ -63,4 +65,13 @@ data class LinkResponse(
             imageId = localImageId
         )
     }
+
+    fun toLinkItem() = LinkItem(
+        id = UUID.fromString(id),
+        name = name,
+        level = level,
+        type = ContentType.fromName(type),
+        position = position,
+        imgUrl = image
+    )
 }

@@ -9,7 +9,8 @@ package com.fedorinov.tpumobile.data.database.enum
 enum class ContentType(val id: Int) {
     LINKS_LIST(1),
     ARTICLE(2),
-    LINK(3);
+    LINK(3),
+    SCHEDULE(4);
 
     companion object {
         fun fromName(name: String): ContentType? = values().find { it.name == name }

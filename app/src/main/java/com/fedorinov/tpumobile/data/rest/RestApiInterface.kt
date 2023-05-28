@@ -36,7 +36,7 @@ interface RestApiInterface {
         @Header("Accept-Language") language: String
     ) : Response<List<GroupResponse>>
 
-    @GET(REST_GET_MENU_ITEMS)
+    @GET(REST_GET_LINKS)
     suspend fun getLinks(
         @Header("Authorization") token: String,
         @Header("Accept-Language") language: String,

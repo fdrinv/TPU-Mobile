@@ -7,23 +7,25 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.fedorinov.tpumobile.logic.sync.Synchronize
 import com.fedorinov.tpumobile.ui.NavGraphs
 import com.fedorinov.tpumobile.ui.theme.TPUMobileTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ramcosta.composedestinations.DestinationsNavHost
-import kotlinx.coroutines.runBlocking
-import org.koin.android.ext.android.inject
-import org.koin.androidx.compose.inject
-import org.koin.java.KoinJavaComponent.inject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // - Устанавливаем заставку Splash-экрана
         installSplashScreen()
         /*runBlocking {
-            val synchronize: Synchronize by inject<Synchronize>(Synchronize::class.java)
-            synchronize.doSync()
+            val restApi: RestApiTpu by inject(RestApiTpu::class.java)
+            val result = restApi.api.getLinks(
+                token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJlYWYyNUB0cHUucnUiLCJleHAiOjE2ODU1NTI0MDAsInNhbHQiOiJkQWpESlRSaHVuaiJ9.RD0LOhQIzSIwQYj30O_7KP2xZpG94Pgl-EvfmcG6TvgVTuXWJj6EwnNQ8gUU6TFjV0CU_4O_dYFKzw5LtEu5EQ",
+                language = "ru",
+                languageId = "E06ED586-DD3B-4751-9BED-764047793AFA",
+                email = "eaf25@tpu.ru"
+            )
+            val bfs: BreathFirstSearch<LinkResponse> = BreathFirstSearch(Vertex())
+            Log.i(TAG, "result body = ${result.body()}")
         }*/
         super.onCreate(savedInstanceState)
 

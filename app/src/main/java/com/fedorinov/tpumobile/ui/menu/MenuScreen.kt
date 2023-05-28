@@ -3,35 +3,45 @@ package com.fedorinov.tpumobile.ui.menu
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.AsyncImage
+import com.fedorinov.tpumobile.ui.common.scaffold.ScaffoldWithModalDrawer
 import com.ramcosta.composedestinations.annotation.Destination
-
-@Composable
-@Destination
-fun MenuScreen() {
-    // MenuScreenStateless()
-}
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun MenuScreenStateless(
-    // Заголовок
-    title: String = "О ТПУ",
-    // - Нажатие на меню
-    onMenuClicked: () -> Unit = {}
-) {
-    Scaffold(
+@Destination
+fun MenuScreen() {
+
+    val viewModel: MenuViewModel = getViewModel()
+
+    val items by viewModel.items.collectAsState()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
+    ScaffoldWithModalDrawer(
+        // - Боковое меню
+        drawerState = drawerState,
+        drawerItems = items.toList(),
+        // - Экран
         topBar = {
             MenuTopBar(
-                title = title,
-                onMenuClicked = onMenuClicked
+                title = "О ТПУ",
+                onMenuClicked = {
+                    scope.launch { if (drawerState.isOpen) drawerState.close() else drawerState.open() }
+                }
             )
         },
         content = { paddingValues ->
@@ -54,11 +64,12 @@ private fun MenuTopBar(
     TopAppBar(
         title = { Text(title) },
         navigationIcon = {
-            // FIXME: Заменить на кнопку
-            Icon(
-                imageVector = Icons.Filled.Menu,
-                contentDescription = null
-            )
+            IconButton(onClick = onMenuClicked) {
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = null
+                )
+            }
         }
     )
 }

@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Article
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.ReadMore
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -90,6 +91,7 @@ fun MainMenuItem(
                     LINKS_LIST -> Icons.Filled.ReadMore
                     ARTICLE -> Icons.Filled.Article
                     LINK -> Icons.Filled.Link
+                    SCHEDULE -> Icons.Filled.Schedule
                 },
                 contentDescription = null
             )

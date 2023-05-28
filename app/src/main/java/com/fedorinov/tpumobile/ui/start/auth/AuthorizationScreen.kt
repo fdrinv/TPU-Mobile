@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.fedorinov.tpumobile.R
 import com.fedorinov.tpumobile.ui.common.CheckBoxWithText
 import com.fedorinov.tpumobile.ui.destinations.EventCalendarScreenDestination
+import com.fedorinov.tpumobile.ui.destinations.MenuScreenDestination
 import com.fedorinov.tpumobile.ui.destinations.RegistrationScreenDestination
 import com.fedorinov.tpumobile.ui.start.auth.AuthState.*
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationUiEvent.*
@@ -67,7 +68,7 @@ fun AuthorizationScreen(navigator: DestinationsNavigator) {
 
     // - Перейти на главный экран при успешной авторизации в системе
     LaunchedEffect(uiState.authState) {
-        if (uiState.authState is Success) navigator.navigate(EventCalendarScreenDestination)
+        if (uiState.authState is Success) navigator.navigate(MenuScreenDestination)
     }
 
     AuthorizationScreenStateless(

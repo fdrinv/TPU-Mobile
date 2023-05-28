@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e130bf5f6613f822902e7db131bc0aa9",
+    "identityHash": "050b12f9a59d31922a3611df452c5a29",
     "entities": [
       {
         "tableName": "group",
@@ -60,7 +60,7 @@
       },
       {
         "tableName": "link",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `external_id` BLOB, `name` TEXT NOT NULL, `level` INTEGER NOT NULL, `position` INTEGER NOT NULL, `type` TEXT NOT NULL, `url` TEXT, `article_id` INTEGER, `image` TEXT, `image_id` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `external_id` BLOB, `parent_id` INTEGER, `name` TEXT NOT NULL, `level` INTEGER NOT NULL, `position` INTEGER NOT NULL, `type` TEXT NOT NULL, `url` TEXT, `article_id` INTEGER, `image` TEXT, `image_id` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -72,6 +72,12 @@
             "fieldPath": "externalId",
             "columnName": "external_id",
             "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "parentId",
+            "columnName": "parent_id",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -164,7 +170,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e130bf5f6613f822902e7db131bc0aa9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '050b12f9a59d31922a3611df452c5a29')"
     ]
   }
 }

@@ -9,5 +9,6 @@ data class LinkItem(
     val level: Int,
     val type: ContentType?,
     val position: Int,
-    val imgUrl: String? = null
+    val imgUrl: String? = null,
+    val children: List<LinkItem>
 )

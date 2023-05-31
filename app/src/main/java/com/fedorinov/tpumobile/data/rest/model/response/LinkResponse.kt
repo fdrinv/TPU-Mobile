@@ -47,8 +47,8 @@ data class LinkResponse(
      */
     fun toEntity(
         withId: Int? = null,
-        articleIdMap: Map<UUID, Int>,
-        imageIdMap: Map<UUID, Int>
+        articleIdMap: Map<UUID, Int> = mapOf(),
+        imageIdMap: Map<UUID, Int> = mapOf()
     ): LinkEntity {
         val localArticleId: Int? = if (articleId != null) articleIdMap[UUID.fromString(articleId)] else null
         val localImageId: Int? = if (imageId != null) imageIdMap[UUID.fromString(imageId)] else null
@@ -65,13 +65,4 @@ data class LinkResponse(
             imageId = localImageId
         )
     }
-
-    fun toLinkItem() = LinkItem(
-        id = UUID.fromString(id),
-        name = name,
-        level = level,
-        type = ContentType.fromName(type),
-        position = position,
-        imgUrl = image
-    )
 }

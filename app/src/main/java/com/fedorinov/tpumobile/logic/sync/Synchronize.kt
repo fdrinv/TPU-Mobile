@@ -161,16 +161,6 @@ class Synchronize(
         )
     }
 
-    var numberOfIteration = 0L
-
-    private suspend fun recursiveInsertChildren(parentLocalId: Int, localId: Int, restRec: LinkResponse, dbRec: LinkEntity) {
-
-        numberOfIteration++
-        Log.i(TAG, "Рекурсивный проход по дереву номер $numberOfIteration")
-
-
-    }
-
     /**
      * Синхронизация справочника от сервера.
      * Новые записи добавляются, совпадающие по UUID обновляются, иные - удаляются из БД.

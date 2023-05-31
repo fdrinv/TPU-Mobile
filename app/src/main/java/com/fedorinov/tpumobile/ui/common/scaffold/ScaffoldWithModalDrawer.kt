@@ -19,9 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.fedorinov.tpumobile.data.rest.model.response.LinkResponse
 import com.fedorinov.tpumobile.ui.common.text.TextLLarge
+import com.fedorinov.tpumobile.ui.model.LinkItem
 import com.fedorinov.tpumobile.ui.theme.ICON_SMALL_SIZE
+import java.util.UUID
 
 private val drawerTonalElevation = 4.dp
 private val drawerShapeCornerSmall = 8.dp
@@ -30,8 +31,9 @@ private val drawerShapeCornerSmall = 8.dp
 @Composable
 fun ScaffoldWithModalDrawer(
     modifier: Modifier = Modifier,
+    drawerSelectedItem: LinkItem? = null,
     drawerState: DrawerState,
-    drawerItems: List<LinkResponse>,
+    drawerItems: List<LinkItem>,
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     snackbarHost: @Composable () -> Unit = {},
@@ -40,6 +42,7 @@ fun ScaffoldWithModalDrawer(
     containerColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(containerColor),
     contentWindowInsets: WindowInsets = ScaffoldDefaults.contentWindowInsets,
+    onItemSelected: (LinkItem) -> Unit,
     content: @Composable (PaddingValues) -> Unit
 ) {
     ModalNavigationDrawer(
@@ -61,13 +64,13 @@ fun ScaffoldWithModalDrawer(
                         },
                         icon = {
                             AsyncImage(
-                                model = item.image,
+                                model = item.imgUrl,
                                 contentDescription = null,
                                 modifier = Modifier.size(ICON_SMALL_SIZE)
                             )
                         },
-                        selected = false,
-                        onClick = {}
+                        selected = item.id == drawerSelectedItem?.id,
+                        onClick = { onItemSelected(item) }
                     )
                 }
             }

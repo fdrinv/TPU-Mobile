@@ -1,6 +1,7 @@
 package com.fedorinov.tpumobile.ui.model
 
 import com.fedorinov.tpumobile.data.database.enum.ContentType
+import com.fedorinov.tpumobile.data.rest.model.response.LinkResponse
 import java.util.UUID
 
 data class LinkItem(
@@ -10,5 +11,5 @@ data class LinkItem(
     val type: ContentType?,
     val position: Int,
     val imgUrl: String? = null,
-    val children: List<LinkItem>
+    val children: List<LinkResponse>
 )

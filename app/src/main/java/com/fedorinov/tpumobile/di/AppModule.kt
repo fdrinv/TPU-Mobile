@@ -5,13 +5,12 @@ import com.fedorinov.tpumobile.data.repositories.AuthRepository
 import com.fedorinov.tpumobile.data.repositories.CommonRepository
 import com.fedorinov.tpumobile.data.repositories.RegistrationRepository
 import com.fedorinov.tpumobile.data.rest.RestApiTpu
-import com.fedorinov.tpumobile.logic.service.LinkLoaderService
+import com.fedorinov.tpumobile.logic.service.LinkLoader
 import com.fedorinov.tpumobile.logic.sync.Synchronize
 import com.fedorinov.tpumobile.ui.menu.MenuViewModel
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationViewModel
 import com.fedorinov.tpumobile.ui.start.reg.RegistrationViewModel
 import com.fedorinov.tpumobile.userPreferencesStore
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.android.ext.koin.androidContext
@@ -30,7 +29,7 @@ val appModule = module {
     single { RoomDb.databaseBuilder(androidContext(), get()) }
 
     // Services
-    factory { LinkLoaderService(get(), get()) }
+    factory { LinkLoader(get()) }
 
     // Sync
     single { Synchronize(get(), get(), get(), get(), get()) }
@@ -47,12 +46,12 @@ val appModule = module {
 
     // Repositories
     single { AuthRepository(get(), get(named(DataStoreUserPreferences))) }
-    single { CommonRepository(get()) }
+    single { CommonRepository(get(), get(), get()) }
     single { RegistrationRepository(get()) }
 
     // ViewModels
     viewModel { AuthorizationViewModel(get()) }
     viewModel { RegistrationViewModel(get(), get()) }
-    viewModel { MenuViewModel(get(), get(), get(), get()) }
+    viewModel { MenuViewModel(get(), get(), get()) }
 
 }

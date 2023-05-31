@@ -27,14 +27,15 @@ fun MenuScreen() {
 
     val viewModel: MenuViewModel = getViewModel()
 
-    val items by viewModel.items.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     ScaffoldWithModalDrawer(
         // - Боковое меню
         drawerState = drawerState,
-        drawerItems = items.toList(),
+        drawerSelectedItem = uiState.drawerCurrentItem,
+        drawerItems = uiState.drawerItems,
         // - Экран
         topBar = {
             MenuTopBar(
@@ -47,8 +48,9 @@ fun MenuScreen() {
         content = { paddingValues ->
             MenuContent(
                 paddingValues = paddingValues
-            )
-        }
+           )
+        },
+        onItemSelected = { newLink -> viewModel.changeDrawerListItem(newLink) }
     )
 }
 

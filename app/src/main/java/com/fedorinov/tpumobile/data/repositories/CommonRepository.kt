@@ -27,15 +27,11 @@ class CommonRepository(
     /**
      * Получаем список всех ссылок используемые в приложение.
      */
-    suspend fun getLinks(): List<LinkResponse> = try {
+    suspend fun getLinks(): List<LinkResponse> =
         restApiTpu.api.getLinks(
             token = "Bearer ${authRepository.userPreferencesFlow.firstOrNull()?.userToken}",
             language = Locale.getDefault().toString(),
             languageId = authRepository.userPreferencesFlow.first().languageId,
             email = authRepository.userPreferencesFlow.first().email
         ).body() ?: emptyList()
-    } catch (e: Exception) {
-        e.printStackTrace()
-        emptyList()
-    }
 }

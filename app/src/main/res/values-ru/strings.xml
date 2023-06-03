@@ -70,4 +70,9 @@
     <string name="exception_no_internet_connection">Отсутствует подключение к интернету</string>
     <string name="exception_failed_save_token">Не удалось сохранить токен, возможно он не был получен от сервера</string>
 
+    <string name="enum_content_type_links_list">Список</string>
+    <string name="enum_content_type_article">Статья</string>
+    <string name="enum_content_type_link">Внешняя ссылка</string>
+    <string name="enum_content_type_schedule">Расписание</string>
+
 </resources>

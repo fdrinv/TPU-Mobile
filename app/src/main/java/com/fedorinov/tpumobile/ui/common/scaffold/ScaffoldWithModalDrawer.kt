@@ -34,6 +34,7 @@ fun ScaffoldWithModalDrawer(
     drawerSelectedItem: LinkItem? = null,
     drawerState: DrawerState,
     drawerItems: List<LinkItem>,
+    gesturesEnabled: Boolean = true,
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     snackbarHost: @Composable () -> Unit = {},
@@ -47,6 +48,7 @@ fun ScaffoldWithModalDrawer(
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
+        gesturesEnabled = gesturesEnabled,
         drawerContent = {
             ModalDrawerSheet(
                 drawerContainerColor = MaterialTheme.colorScheme.surface,

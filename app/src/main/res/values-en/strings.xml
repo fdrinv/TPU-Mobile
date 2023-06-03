@@ -70,4 +70,9 @@
     <string name="exception_no_internet_connection">No internet connection</string>
     <string name="exception_failed_save_token">Failed to save the token, it may not have been received from the server</string>
 
+    <string name="enum_content_type_links_list">Links list</string>
+    <string name="enum_content_type_article">Article</string>
+    <string name="enum_content_type_link">Link</string>
+    <string name="enum_content_type_schedule">Schedule</string>
+
 </resources>

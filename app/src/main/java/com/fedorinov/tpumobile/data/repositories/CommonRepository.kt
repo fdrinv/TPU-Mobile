@@ -3,6 +3,7 @@ package com.fedorinov.tpumobile.data.repositories
 import com.fedorinov.tpumobile.data.database.dao.GroupDao
 import com.fedorinov.tpumobile.data.database.enum.ContentType
 import com.fedorinov.tpumobile.data.rest.RestApiTpu
+import com.fedorinov.tpumobile.data.rest.model.response.ArticleResponse
 import com.fedorinov.tpumobile.data.rest.model.response.LinkResponse
 import com.fedorinov.tpumobile.ui.model.LinkItem
 import kotlinx.coroutines.flow.first
@@ -34,4 +35,12 @@ class CommonRepository(
             languageId = authRepository.userPreferencesFlow.first().languageId,
             email = authRepository.userPreferencesFlow.first().email
         ).body() ?: emptyList()
+
+    suspend fun getArticleById(articleId: String): ArticleResponse? =
+        restApiTpu.api.getArticle(
+            token = "Bearer ${authRepository.userPreferencesFlow.firstOrNull()?.userToken}",
+            language = Locale.getDefault().toString(),
+            articleId = articleId
+        ).body()
+
 }

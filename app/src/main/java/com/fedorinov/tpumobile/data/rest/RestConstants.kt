@@ -12,3 +12,5 @@ const val REST_REGISTRATION_BY_LOCAL = "auth/local/registration"
 const val REST_GET_GROUPS = "studyGroup"
 // - Получение кнопок меню
 const val REST_GET_LINKS = "menu"
+// - Получение статьи по ID
+const val REST_GET_ARTICLE = "article"

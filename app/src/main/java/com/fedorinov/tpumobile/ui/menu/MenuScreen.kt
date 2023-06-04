@@ -1,6 +1,5 @@
 package com.fedorinov.tpumobile.ui.menu
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
@@ -28,15 +27,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import com.fedorinov.tpumobile.data.database.enum.ContentType
 import com.fedorinov.tpumobile.data.database.enum.ContentType.*
+import com.fedorinov.tpumobile.ui.article.ArticleModel
 import com.fedorinov.tpumobile.ui.common.menu.MainMenuItem
 import com.fedorinov.tpumobile.ui.common.scaffold.ScaffoldWithModalDrawer
+import com.fedorinov.tpumobile.ui.destinations.ArticleScreenDestination
 import com.fedorinov.tpumobile.ui.menu.MenuViewModel.MenuUiState.*
 import com.fedorinov.tpumobile.ui.model.LinkItem
 import com.fedorinov.tpumobile.ui.theme.PADDING_BIG
@@ -44,13 +42,14 @@ import com.fedorinov.tpumobile.ui.theme.PADDING_MEDIUM
 import com.google.accompanist.web.WebView
 import com.google.accompanist.web.rememberWebViewState
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Destination
-fun MenuScreen() {
+fun MenuScreen(navigator: DestinationsNavigator) {
 
     val viewModel: MenuViewModel = getViewModel()
 
@@ -97,7 +96,18 @@ fun MenuScreen() {
                         paddingValues = paddingValues,
                         currentPageItem = state.currentPageItem,
                         pageItems = state.pageItems,
-                        onItemClicked = { newPage -> viewModel.changeCurrentPage(newPage) }
+                        onItemClicked = { newPage ->
+                            if (newPage.type != ARTICLE) viewModel.changeCurrentPage(newPage)
+                            else {
+                                newPage.articleId?.let { articleId ->
+                                    navigator.navigate(
+                                        ArticleScreenDestination(
+                                            ArticleModel(id = articleId)
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     )
                 },
                 onItemSelected = { newLink -> viewModel.changeDrawerListItem(newLink) }
@@ -147,7 +157,7 @@ private fun MenuContent(
 ) {
     Log.i("MenuViewModel", "currentPageItem = ${currentPageItem}}")
 
-    when(currentPageItem?.type) {
+    when (currentPageItem?.type) {
         LINKS_LIST -> {
             Column(
                 modifier = Modifier
@@ -176,21 +186,18 @@ private fun MenuContent(
                 }
             }
         }
+
         ARTICLE -> {
 
         }
+
         LINK, SCHEDULE -> {
             currentPageItem.url?.let { url ->
                 val webViewState = rememberWebViewState(url)
                 WebView(state = webViewState)
             }
         }
-        else -> { }
+
+        else -> {}
     }
-}
-
-@Preview
-@Composable
-private fun MenuScreenPreview() {
-
 }

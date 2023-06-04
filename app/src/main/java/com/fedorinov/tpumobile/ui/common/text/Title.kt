@@ -22,8 +22,8 @@ import androidx.compose.ui.unit.TextUnit
 
 @Composable
 fun TextTSmall(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
@@ -60,8 +60,8 @@ fun TextTSmall(
 
 @Composable
 fun TextTMedium(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
@@ -98,8 +98,8 @@ fun TextTMedium(
 
 @Composable
 fun TextTLarge(
-    modifier: Modifier = Modifier,
     text: String,
+    modifier: Modifier = Modifier,
     color: Color = Color.Unspecified,
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,

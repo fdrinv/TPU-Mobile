@@ -2,6 +2,7 @@ package com.fedorinov.tpumobile.data.rest
 
 import com.fedorinov.tpumobile.data.rest.model.request.AuthRequest
 import com.fedorinov.tpumobile.data.rest.model.request.RegistrationRequest
+import com.fedorinov.tpumobile.data.rest.model.response.ArticleResponse
 import com.fedorinov.tpumobile.data.rest.model.response.AuthResponse
 import com.fedorinov.tpumobile.data.rest.model.response.GroupResponse
 import com.fedorinov.tpumobile.data.rest.model.response.LinkResponse
@@ -43,5 +44,12 @@ interface RestApiInterface {
         @Query("language") languageId: String,
         @Query(encoded = true, value = "email") email: String
     ) : Response<List<LinkResponse>>
+
+    @GET(REST_GET_ARTICLE)
+    suspend fun getArticle(
+        @Header("Authorization") token: String,
+        @Header("Accept-Language") language: String,
+        @Query("id") articleId: String,
+    ) : Response<ArticleResponse>
 
 }

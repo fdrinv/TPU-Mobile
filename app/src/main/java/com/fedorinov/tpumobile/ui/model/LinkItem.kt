@@ -12,5 +12,6 @@ data class LinkItem(
     val position: Int,
     val imgUrl: String? = null,
     val url: String? = null,
+    val articleId: UUID? = null,
     val children: List<LinkResponse>
 )

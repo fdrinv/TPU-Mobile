@@ -135,6 +135,7 @@ class MenuViewModel(
                 position = it.position,
                 imgUrl = it.image,
                 url = it.url,
+                articleId = it.articleId?.let { articleId -> UUID.fromString(articleId) } ,
                 children = it.children ?: emptyList()
             )
         }

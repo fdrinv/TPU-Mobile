@@ -7,6 +7,7 @@ import com.fedorinov.tpumobile.data.repositories.RegistrationRepository
 import com.fedorinov.tpumobile.data.rest.RestApiTpu
 import com.fedorinov.tpumobile.logic.service.LinkLoader
 import com.fedorinov.tpumobile.logic.sync.Synchronize
+import com.fedorinov.tpumobile.ui.article.ArticleViewModel
 import com.fedorinov.tpumobile.ui.menu.MenuViewModel
 import com.fedorinov.tpumobile.ui.start.auth.AuthorizationViewModel
 import com.fedorinov.tpumobile.ui.start.reg.RegistrationViewModel
@@ -53,5 +54,6 @@ val appModule = module {
     viewModel { AuthorizationViewModel(get()) }
     viewModel { RegistrationViewModel(get(), get()) }
     viewModel { MenuViewModel(get(), get(), get()) }
+    viewModel { ArticleViewModel(get(), get()) }
 
 }
